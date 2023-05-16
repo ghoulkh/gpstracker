@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "460931f5-3732-4355-951b-1e3df152ad83",
+		"name": "tracker-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18477377"
+	},
+	"item": [
+		{
+			"name": "Tạo tài khoản",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\",\n    \"fullName\":\"Dương Đăng Phi\",\n    \"email\":\"1203ddp@gmail.com\",\n    \"phone\":\"0826660617\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "JSESSIONID=DE5C3FC9C62E0C4EA51ED846565405D2"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY4NDI3NjcwNCwiaWF0IjoxNjg0MjU4NzA0fQ.phn7YZVuO7zThDpXllbD68979PNeKawa1yqQ-cuLUhW7L3XcgABOFug0j94JaRrIVVk_vXro6qYbJePRLoNUmA"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

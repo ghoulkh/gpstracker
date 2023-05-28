@@ -1,6 +1,6 @@
 package com.bka.gpstracker.model.request;
 
-import com.bka.gpstracker.entity.User;
+import com.bka.gpstracker.entity.UserInfo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -17,19 +17,21 @@ public class RegisterUserRequest {
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "invalid email!")
     @NotBlank(message = "email is required!")
     private String email;
+    private String enterpriseCode;
     @Pattern(regexp = "^[0-9\\-\\+]{9,15}$", message = "invalid phone number!")
     @NotBlank(message = "phone is required!")
     private String phone;
     private String avaUrl;
 
-    public User toUser() {
-        User user = new User();
-        user.setUsername(this.username);
-        user.setFullName(this.fullName);
-        user.setEmail(this.email);
-        user.setPhone(this.phone);
-        user.setAvaUrl(this.avaUrl);
-        return user;
+    public UserInfo toUser() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(this.username);
+        userInfo.setFullName(this.fullName);
+        userInfo.setEmail(this.email);
+        userInfo.setPhone(this.phone);
+        userInfo.setAvaUrl(this.avaUrl);
+        userInfo.setEnterpriseCode(this.enterpriseCode);
+        return userInfo;
     }
 }
 

@@ -1,11 +1,12 @@
 package com.bka.gpstracker.model.response;
 
-import com.bka.gpstracker.entity.User;
+import com.bka.gpstracker.entity.UserInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
@@ -19,9 +20,14 @@ public class UserResponse {
     private String avaUrl;
     private String email;
     private String createdBy;
-    public static UserResponse from(User user) {
+    private List<AuthorityResponse> authorities;
+    public static UserResponse from(UserInfo userInfo) {
         UserResponse result = new UserResponse();
-        BeanUtils.copyProperties(user, result);
+        BeanUtils.copyProperties(userInfo, result);
+        if (userInfo.getAuthorities() != null)
+            result.setAuthorities(userInfo.getAuthorities().stream()
+                    .map(authority -> AuthorityResponse.from(authority))
+                    .collect(Collectors.toList()));
         return result;
     }
 }

@@ -2,23 +2,18 @@ package com.bka.gpstracker.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name = "user_tracker")
+@Table(name = "[User]")
 public class User {
     @Id
-    @Column(name = "username", nullable = true)
+    @Column(name = "UserName")
     private String username;
-    private Date createdDate = new Date();
-    private Date lastModifiedDate = new Date();
+    @Column(name = "PassWord")
     private String password;
-    private String fullName;
-    private String avaUrl;
-    private String email;
-    private String phone;
-    private String createdBy;
 }

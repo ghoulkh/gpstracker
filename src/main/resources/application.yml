@@ -7,8 +7,18 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 security:
   jwt:
     token:
       secret-key: secret-key-gps-tracker-key
+
+logging:
+  config: config/log4j2.yml
+
+app:
+  admin:
+    username: admin
+    password: admin

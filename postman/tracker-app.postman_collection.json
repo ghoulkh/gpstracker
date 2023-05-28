@@ -16,20 +16,30 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTIzMTE3NywiaWF0IjoxNjg1MjEzMTc3fQ.D66MwhDvpGvPMhCPiF1W4usXbEmI7IpcO6H_1ZouDyo5YwPohh2zH2JPIePheDC9tRYKAmAy6S1GuYeJ-H_J-A",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4Nzg1OTI1OCwiaWF0IjoxNjg1MjY3MjU4fQ.bJvU1zoO5cMhiRzqNkZhl3Nm4pwiFYL3DMhXKxIJqkIPtPeHJkpxwn5XzdeFIJo81YGzJpbCulKrQlRQE7b84Q",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/position/DCEDD4E0",
+							"raw": "localhost:8080/api/positions/DCEDD4E0?page_index=1&page_size=1000",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"api",
-								"position",
+								"positions",
 								"DCEDD4E0"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "1000"
+								}
 							]
 						}
 					},
@@ -131,7 +141,7 @@
 			"name": "Thông tin xe",
 			"item": [
 				{
-					"name": "localhost:8080/api/cars-info",
+					"name": "Thông tin của tất cả các xe có phân trang",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -142,7 +152,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/cars-info",
+							"raw": "localhost:8080/api/cars-info?page_index=1&page_size=10",
 							"host": [
 								"localhost"
 							],
@@ -150,6 +160,16 @@
 							"path": [
 								"api",
 								"cars-info"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
@@ -200,7 +220,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg"
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4Nzg1OTI1OCwiaWF0IjoxNjg1MjY3MjU4fQ.bJvU1zoO5cMhiRzqNkZhl3Nm4pwiFYL3DMhXKxIJqkIPtPeHJkpxwn5XzdeFIJo81YGzJpbCulKrQlRQE7b84Q"
 							},
 							{
 								"key": "Content-Type",
@@ -208,7 +228,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/enterprises",
+							"raw": "localhost:8080/api/enterprises?page_index=1&page_size=10",
 							"host": [
 								"localhost"
 							],
@@ -216,13 +236,23 @@
 							"path": [
 								"api",
 								"enterprises"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "lấy thông tin chi tiết của 1 doanh nghiệp",
+					"name": "Lấy thông tin chi tiết của 1 doanh nghiệp",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -256,7 +286,7 @@
 			"name": "Phân quyền",
 			"item": [
 				{
-					"name": "localhost:8080/api/admin/permission",
+					"name": "Phân quyền admin",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -283,6 +313,41 @@
 								"api",
 								"admin",
 								"permission"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gán tài khoản với thông tin xe",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4Nzg1ODMxOSwiaWF0IjoxNjg1MjY2MzE5fQ.GV0osbQtrBbeJ4yICgzPPUwrItGe0DZ97VyBvBXBOvDpVEJ6QAiPBtyHPFH00kheouUu5O3hV6l9tR_Coh31Ug"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rfid\":\"AA123456\",\n    \"username\":\"phiduong02\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/user/admin/car-info/author",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user",
+								"admin",
+								"car-info",
+								"author"
 							]
 						}
 					},

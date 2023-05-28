@@ -18,7 +18,7 @@ public class PositionController {
     @Autowired
     private PositionService positionService;
 
-    @RequestMapping("/position/{rfid}")
+    @RequestMapping("/positions/{rfid}")
     public ResponseEntity<List<PositionLog>> getByRfid(@PathVariable String rfid,
                                                        @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
                                                        @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {

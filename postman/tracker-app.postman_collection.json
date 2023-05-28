@@ -44,6 +44,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "API test khi có vị trí mới",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4Nzg2MDk3OCwiaWF0IjoxNjg1MjY4OTc4fQ.XFBi8wd_Th_8HiTrrgIZQ0fIMv8WAuwEr-C4xg_GFlJrP6S6QaF4k1ehzf3eTOIbF3AcujCNNP8Ch4GH6ssQIQ"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\":\"08/05/2023\", \n    \"hour\":\"20:23:53\", \n    \"rfid\": \"AA123456\",\n    \"lat\": \"20.932119\",\n    \"lon\": \"105.803024\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/position",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"position"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -141,7 +173,7 @@
 			"name": "Thông tin xe",
 			"item": [
 				{
-					"name": "Thông tin của tất cả các xe có phân trang",
+					"name": "ADMIN lấy thông tin của tất cả các xe có phân trang",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -170,6 +202,31 @@
 									"key": "page_size",
 									"value": "10"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy thông tin xe của mình",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/me/cars-info",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"cars-info"
 							]
 						}
 					},

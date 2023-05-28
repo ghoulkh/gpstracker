@@ -3,6 +3,7 @@ package com.bka.gpstracker.controller;
 import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.CarInfo;
 import com.bka.gpstracker.service.CarInfoService;
+import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -27,5 +28,10 @@ public class CarInfoController {
         return ResponseEntity.ok(carInfoService.getCarsInfo(pageIndex, pageSize));
     }
 
+    @GetMapping("/me/cars-info")
+    public ResponseEntity<List<CarInfo>> getCarInfo() {
+        String currentUsername = SecurityUtil.getCurrentUsername();
+        return ResponseEntity.ok(carInfoService.getByUsername(currentUsername));
+    }
 
 }

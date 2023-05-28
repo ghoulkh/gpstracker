@@ -7,89 +7,288 @@
 	},
 	"item": [
 		{
-			"name": "Tạo tài khoản",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\",\n    \"fullName\":\"Dương Đăng Phi\",\n    \"email\":\"1203ddp@gmail.com\",\n    \"phone\":\"0826660617\"\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/api/user",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
+			"name": "Vị Trí",
+			"item": [
+				{
+					"name": "lấy lịch sử vị trí theo rfid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTIzMTE3NywiaWF0IjoxNjg1MjEzMTc3fQ.D66MwhDvpGvPMhCPiF1W4usXbEmI7IpcO6H_1ZouDyo5YwPohh2zH2JPIePheDC9tRYKAmAy6S1GuYeJ-H_J-A",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/position/DCEDD4E0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"position",
+								"DCEDD4E0"
+							]
+						}
 					},
-					{
-						"key": "Cookie",
-						"value": "JSESSIONID=DE5C3FC9C62E0C4EA51ED846565405D2"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\"\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/api/auth/login",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"auth",
-						"login"
-					]
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "get profile",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY4NDI3NjcwNCwiaWF0IjoxNjg0MjU4NzA0fQ.phn7YZVuO7zThDpXllbD68979PNeKawa1yqQ-cuLUhW7L3XcgABOFug0j94JaRrIVVk_vXro6qYbJePRLoNUmA"
-					}
-				],
-				"url": {
-					"raw": "localhost:8080/api/user",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"user"
-					]
+			"name": "User",
+			"item": [
+				{
+					"name": "Tạo tài khoản",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\",\n    \"fullName\":\"Dương Đăng Phi\",\n    \"email\":\"1203ddp@gmail.com\",\n    \"phone\":\"0826660617\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "JSESSIONID=DE5C3FC9C62E0C4EA51ED846565405D2"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"phiduong\",\n    \"password\":\"12345678\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY4NDI3NjcwNCwiaWF0IjoxNjg0MjU4NzA0fQ.phn7YZVuO7zThDpXllbD68979PNeKawa1yqQ-cuLUhW7L3XcgABOFug0j94JaRrIVVk_vXro6qYbJePRLoNUmA"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/user",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Thông tin xe",
+			"item": [
+				{
+					"name": "localhost:8080/api/cars-info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/cars-info",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"cars-info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doanh nghiệp",
+			"item": [
+				{
+					"name": "tạo mới 1 doanh nghiệp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"enterpriseCode\":\"vin\",\n    \"enterpriseName\":\"Tập đoàn xanhsm\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/enterprise",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"enterprise"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy thông tin tất cả các doanh nghiệp",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/enterprises",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"enterprises"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lấy thông tin chi tiết của 1 doanh nghiệp",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY4NTI4MzE3OSwiaWF0IjoxNjg1MjY1MTc5fQ.SHfHHqpeOkqSR_ZMrVvWzPTY9JUdpXb9DMTQ2nZEritWxPu9OURevZDCRSIyeYChFsNsWQCA7IozNEC69CdZkg"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/enterprise/vin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"enterprise",
+								"vin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Phân quyền",
+			"item": [
+				{
+					"name": "localhost:8080/api/admin/permission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZzAxIiwiZXhwIjoxNjg3ODU4MDA2LCJpYXQiOjE2ODUyNjYwMDZ9.bxej9rLG66IDbXR83BNQZErR5KObwZ4a_a_UDFyfFTPE3ljR_em-IreQjFDijIqlSl9HRGEaGWiwT61lLgNSWg"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\":\"ROLE_ENTERPRISE_ADMIN\",\n    \"username\":\"phiduong02\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/admin/permission",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"permission"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

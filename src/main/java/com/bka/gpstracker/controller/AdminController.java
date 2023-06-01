@@ -1,7 +1,7 @@
 package com.bka.gpstracker.controller;
 
 import com.bka.gpstracker.auth.AuthoritiesConstants;
-import com.bka.gpstracker.entity.Authority;
+import com.bka.gpstracker.solr.entity.Authority;
 import com.bka.gpstracker.model.request.PermissionRequest;
 import com.bka.gpstracker.model.response.UserResponse;
 import com.bka.gpstracker.service.AdminService;

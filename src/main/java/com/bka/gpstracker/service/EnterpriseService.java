@@ -1,11 +1,9 @@
 package com.bka.gpstracker.service;
 
 import com.bka.gpstracker.entity.Enterprise;
-import com.bka.gpstracker.entity.UserInfo;
 import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.request.RegisterEnterpriseRequest;
-import com.bka.gpstracker.model.response.UserResponse;
 import com.bka.gpstracker.repository.EnterpriseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

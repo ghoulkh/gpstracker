@@ -2,7 +2,7 @@ package com.bka.gpstracker.service;
 
 import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.CarInfo;
-import com.bka.gpstracker.entity.UserInfo;
+import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.util.SecurityUtil;

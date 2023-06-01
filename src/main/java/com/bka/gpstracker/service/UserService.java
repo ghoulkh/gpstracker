@@ -1,12 +1,14 @@
 package com.bka.gpstracker.service;
 
-import com.bka.gpstracker.entity.Authority;
-import com.bka.gpstracker.entity.UserInfo;
+import com.bka.gpstracker.solr.entity.Authority;
+import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.request.RegisterUserRequest;
 import com.bka.gpstracker.model.response.UserResponse;
 import com.bka.gpstracker.repository.*;
+import com.bka.gpstracker.solr.repository.AuthorityRepository;
+import com.bka.gpstracker.solr.repository.UserInfoRepository;
 import com.bka.gpstracker.util.SecurityUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +51,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(userInfoToSave.toUser());
 
         Authority authority = new Authority();
-        authority.setUserInfo(userInfoToSave);
+        authority.setUsername(userInfoToSave.getUsername());
         authority.setRole(Authority.Role.ROLE_USER);
         authorityRepository.save(authority);
 
-        return UserResponse.from(result);
+        return UserResponse.from(result, authorityRepository.getAllByUsername(result.getUsername()));
     }
 
     private void validateEnterpriseCode(UserInfo userInfoToSave) {
@@ -76,7 +78,7 @@ public class UserService implements UserDetailsService {
         String currentUser = SecurityUtil.getCurrentUsername();
         UserInfo userInfo = userInfoRepository.findById(currentUser).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.USER_NOT_FOUND));
-        return UserResponse.from(userInfo);
+        return UserResponse.from(userInfo, authorityRepository.getAllByUsername(userInfo.getUsername()));
     }
 
     @Override
@@ -86,7 +88,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
 
-        List<String> roles = user.get().getAuthorities().stream().map(authority ->
+        List<String> roles = authorityRepository.getAllByUsername(username).stream().map(authority ->
                 authority.getRole().getValue()).collect(Collectors.toList());
 
         if (roles.isEmpty()) {

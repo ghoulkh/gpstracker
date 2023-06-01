@@ -1,6 +1,6 @@
 package com.bka.gpstracker.model.request;
 
-import com.bka.gpstracker.entity.UserInfo;
+import com.bka.gpstracker.solr.entity.UserInfo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

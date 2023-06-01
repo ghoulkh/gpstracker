@@ -1,6 +1,6 @@
 package com.bka.gpstracker.model.response;
 
-import com.bka.gpstracker.entity.Authority;
+import com.bka.gpstracker.solr.entity.Authority;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 

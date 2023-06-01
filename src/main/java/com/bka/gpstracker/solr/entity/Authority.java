@@ -1,23 +1,23 @@
-package com.bka.gpstracker.entity;
+package com.bka.gpstracker.solr.entity;
 
 import lombok.Data;
+import org.springframework.data.solr.core.mapping.Indexed;
+import org.springframework.data.solr.core.mapping.SolrDocument;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name = "authority")
-public class Authority implements Serializable {
+@SolrDocument(solrCoreName = "authority")
+public class Authority {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @Indexed(name = "id", type = "string")
+    private String id;
     @Enumerated(EnumType.STRING)
+    @Indexed(name = "role", type = "string")
     private Role role;
-    @ManyToOne()
-    @JoinColumn(name = "username")
-    private UserInfo userInfo;
+    @Indexed(name = "username", type = "string")
+    private String username;
 
     public enum Role {
         ROLE_ADMIN("ROLE_ADMIN"),

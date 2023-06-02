@@ -20,7 +20,7 @@ public class AdminUserController {
     @Autowired
     private AdminUserService adminUserService;
 
-    @Secured({AuthoritiesConstants.ROLE_ENTERPRISE_ADMIN, AuthoritiesConstants.ROLE_ADMIN})
+    @Secured(AuthoritiesConstants.ROLE_ADMIN)
     @PostMapping("/car-info/author")
     public ResponseEntity<CarInfo> setCarInfoAuthor(@RequestBody @Valid AuthorCarInfoRequest request) {
         return ResponseEntity.ok(adminUserService.setCarAuthor(request.getUsername(), request.getRfid()));

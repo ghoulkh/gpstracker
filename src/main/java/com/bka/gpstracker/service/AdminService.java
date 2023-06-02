@@ -39,16 +39,6 @@ public class AdminService {
         if (currentUsername.equals(username)) throw new TrackerAppException(ErrorCode.BAD_REQUEST);
         UserInfo userToAdd = userInfoRepository.findById(username).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.USER_NOT_FOUND));
-        if (role.equals(Authority.Role.ROLE_ENTERPRISE_ADMIN) && userToAdd.getEnterpriseCode() == null)
-            throw new TrackerAppException(ErrorCode.ROLE_INVALID);
-
-        if (SecurityUtil.isAuthor(AuthoritiesConstants.ROLE_ENTERPRISE_ADMIN) && !SecurityUtil.isAuthor(AuthoritiesConstants.ROLE_ADMIN)) {
-            if (role.equals(Authority.Role.ROLE_ADMIN)) throw new TrackerAppException(ErrorCode.ADD_ROLE_ADMIN_PERMISSION_DENIED);
-
-            UserInfo currentUserInfo = userInfoRepository.getByUsername(currentUsername);
-            if (!currentUserInfo.getEnterpriseCode().equals(userToAdd.getEnterpriseCode()))
-                throw new TrackerAppException(ErrorCode.ADD_ROLE_PERMISSION_DENIED);
-        }
 
         validateCanAddRole(userToAdd, role);
         Authority authority = new Authority();

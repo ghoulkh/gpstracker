@@ -17,7 +17,6 @@ public class RegisterUserRequest {
     @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "invalid email!")
     @NotBlank(message = "email is required!")
     private String email;
-    private String enterpriseCode;
     @Pattern(regexp = "^[0-9\\-\\+]{9,15}$", message = "invalid phone number!")
     @NotBlank(message = "phone is required!")
     private String phone;
@@ -30,7 +29,6 @@ public class RegisterUserRequest {
         userInfo.setEmail(this.email);
         userInfo.setPhone(this.phone);
         userInfo.setAvaUrl(this.avaUrl);
-        userInfo.setEnterpriseCode(this.enterpriseCode);
         return userInfo;
     }
 }

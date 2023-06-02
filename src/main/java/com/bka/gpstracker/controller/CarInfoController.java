@@ -22,7 +22,7 @@ public class CarInfoController {
     private CarInfoService carInfoService;
 
     @GetMapping("/cars-info")
-    @Secured({AuthoritiesConstants.ROLE_ENTERPRISE_ADMIN, AuthoritiesConstants.ROLE_ADMIN})
+    @Secured(AuthoritiesConstants.ROLE_ADMIN)
     public ResponseEntity<List<CarInfo>> getCarsInfo(@RequestParam(name = "page_index", required = false, defaultValue = "1") int pageIndex,
                                                      @RequestParam(name = "page_size", required = false, defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(carInfoService.getCarsInfo(pageIndex, pageSize));

@@ -36,8 +36,6 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private AuthorityRepository authorityRepository;
-    @Autowired
-    private EnterpriseService enterpriseService;
 
 
     public UserResponse registrationUser(RegisterUserRequest request) {
@@ -46,7 +44,6 @@ public class UserService implements UserDetailsService {
         UserInfo userInfoToSave = request.toUser();
         userInfoToSave.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        validateEnterpriseCode(userInfoToSave);
         UserInfo result = userInfoRepository.save(userInfoToSave);
         userRepository.save(userInfoToSave.toUser());
 
@@ -58,12 +55,7 @@ public class UserService implements UserDetailsService {
         return UserResponse.from(result, authorityRepository.getAllByUsername(result.getUsername()));
     }
 
-    private void validateEnterpriseCode(UserInfo userInfoToSave) {
-        if (userInfoToSave.getEnterpriseCode() == null)
-            return;
-        if (!enterpriseService.findByEnterpriseCode(userInfoToSave.getEnterpriseCode()).isPresent())
-            throw new TrackerAppException(ErrorCode.ENTERPRISE_CODE_INVALID);
-    }
+
 
     public UserInfo getByUsername(String username) {
         return userInfoRepository.findById(username).orElseThrow(() ->

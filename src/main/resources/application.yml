@@ -22,3 +22,6 @@ app:
   admin:
     username: admin
     password: admin
+
+solr:
+  url: http://20.39.185.145:8600/solr

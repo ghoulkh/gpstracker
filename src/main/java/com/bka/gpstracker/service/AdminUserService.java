@@ -20,12 +20,6 @@ public class AdminUserService {
     public CarInfo setCarAuthor(String username, String rfid) {
         UserInfo userToSet = userService.getByUsername(username);
 
-        if (SecurityUtil.isAuthor(AuthoritiesConstants.ROLE_ENTERPRISE_ADMIN) && !SecurityUtil.isAuthor(AuthoritiesConstants.ROLE_ADMIN)) {
-            String currentUsername = SecurityUtil.getCurrentUsername();
-            UserInfo userInfoCurrentUser = userService.getByUsername(currentUsername);
-            if (!userInfoCurrentUser.getEnterpriseCode().equals(userToSet.getEnterpriseCode()))
-                throw new TrackerAppException(ErrorCode.SET_CAR_INFO_PERMISSION_DENIED);
-        }
         CarInfo carInfoToSet = carInfoService.getByRfid(rfid);
         carInfoToSet.setUsername(userToSet.getUsername());
         return carInfoService.save(carInfoToSet);

@@ -15,8 +15,6 @@ public class UserInfo {
     @Id
     @Indexed(name = "username", type = "string")
     private String username;
-    @Indexed(name = "enterpriseCode", type = "string")
-    private String enterpriseCode;
     @Indexed(name = "createdDate", type = "date")
     private Date createdDate = new Date();
     @Indexed(name = "lastModifiedDate", type = "date")

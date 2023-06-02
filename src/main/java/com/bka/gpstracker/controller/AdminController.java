@@ -21,7 +21,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @Secured({AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_ENTERPRISE_ADMIN})
+    @Secured(AuthoritiesConstants.ROLE_ADMIN)
     @PostMapping("/permission")
     public ResponseEntity<UserResponse> setPermission(@RequestBody @Valid PermissionRequest request) {
         return ResponseEntity.ok(adminService.addAuthorityWithUsername(request.getUsername(), Authority.Role.valueOf(request.getRole())));

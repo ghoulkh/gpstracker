@@ -29,6 +29,7 @@ public class RegisterUserRequest {
         userInfo.setEmail(this.email);
         userInfo.setPhone(this.phone);
         userInfo.setAvaUrl(this.avaUrl);
+        userInfo.setIsBusy(false);
         return userInfo;
     }
 }

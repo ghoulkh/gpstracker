@@ -31,6 +31,13 @@ public class UserInfo {
     private String phone;
     @Indexed(name = "createdBy", type = "string")
     private String createdBy;
+    @Indexed(name = "isBusy", type = "boolean")
+    private Boolean isBusy;
+    @Indexed(name = "currentTripId", type = "string")
+    private String currentTripId;
+    public Boolean getIsBusy() {
+        return this.isBusy == null ? false : isBusy;
+    }
 
     public User toUser() {
         User result = new User();

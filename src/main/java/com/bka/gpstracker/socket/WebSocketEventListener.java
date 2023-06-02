@@ -1,9 +1,13 @@
 package com.bka.gpstracker.socket;
 
-import com.bka.gpstracker.service.AuthService;
+import com.bka.gpstracker.config.JwtToken;
+import com.bka.gpstracker.event.InactiveDriverEvent;
+import com.bka.gpstracker.event.NewDriverActive;
+import com.bka.gpstracker.service.DriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -22,10 +26,16 @@ public class WebSocketEventListener {
     @Autowired
     private MessageChannel clientOutboundChannel;
     @Autowired
-    private AuthService authService;
+    private JwtToken jwtToken;
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+    @Autowired
+    private DriverService driverService;
 
     private static final String INVALID_TOKEN = "INVALID_TOKEN";
-    private static final String UNAUTHORISED = "UNAUTHORISED";
+    private static final String UNAUTHORISED = "Tài xế chưa được gán thông tin xe hoặc đang trong 1 chuyến xe!";
+    private static final String INVALID_POSITION = "yêu cầu cập nhật vị trí!";
+    private static final String INVALID_USERNAME = "username không đúng!";
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
@@ -34,19 +44,46 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        logger.info("Handle disconnect");
+        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+        String destination = sha.getDestination();
+        if (destination.startsWith("/driver")) {
+            String username = driverService.removeActiveDriver(sha.getSessionId());
+            applicationEventPublisher.publishEvent(new InactiveDriverEvent(username));
+            logger.info("Driver disconnect socket with destination: {} and id: {}", destination, sha.getSessionId());
+        } else {
+            logger.info("Client disconnect socket with destination: {} and id: {}", destination, sha.getSessionId());
+        }
     }
 
     @EventListener
     public void onApplicationEvent(SessionSubscribeEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         String destination = sha.getDestination();
-        String rfid = destination.substring(destination.lastIndexOf("/") + 1);
         String token = sha.getFirstNativeHeader("token");
-        if (!authService.checkPermissionConnectToSocket(token, rfid)) {
-            sendMsg(sha.getSessionId(), UNAUTHORISED, StompCommand.ERROR);
-        }
+        String username = jwtToken.validateToken(token);
+        diverCanDrive(username, destination, sha.getSessionId());
+        logger.info("Event subscriber with username: {}, destination: {}", username, destination);
     }
+
+    private void diverCanDrive(String username, String destination, String clientId) {
+        if (!destination.startsWith("/driver")) return;
+        if (!driverService.canDrive(username)) {
+            sendMsg(clientId, UNAUTHORISED, StompCommand.ERROR);
+            return;
+        }
+        if (!driverService.isExistPosition(username)) {
+            sendMsg(clientId, INVALID_POSITION, StompCommand.ERROR);
+            return;
+        }
+        if (!destination.contains(username)) {
+            sendMsg(clientId, INVALID_USERNAME, StompCommand.ERROR);
+        }
+        driverService.addActiveDriver(username, clientId);
+        applicationEventPublisher.publishEvent(new NewDriverActive(username));
+        logger.info("driver active with destination: {}, clientId: {}, username: {}", destination, clientId, username);
+    }
+
+
 
     private void sendMsg(String sessionId, String message, StompCommand command) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.create(command);

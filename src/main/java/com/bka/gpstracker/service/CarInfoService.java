@@ -33,6 +33,9 @@ public class CarInfoService {
                 new TrackerAppException(ErrorCode.CAR_INFO_NOT_FOUND));
     }
 
+    public List<CarInfo> getAllByUsername(String username) {
+        return carInfoRepository.findAllByUsername(username);
+    }
     public List<CarInfo> getByUsername(String username) {
         return carInfoRepository.findAllByUsername(username);
     }

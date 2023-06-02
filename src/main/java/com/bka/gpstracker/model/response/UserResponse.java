@@ -21,6 +21,8 @@ public class UserResponse {
     private String avaUrl;
     private String email;
     private String createdBy;
+    private Boolean isBusy;
+    private String currentTripId;
     private List<AuthorityResponse> authorities;
     public static UserResponse from(UserInfo userInfo, List<Authority> authorities) {
         UserResponse result = new UserResponse();

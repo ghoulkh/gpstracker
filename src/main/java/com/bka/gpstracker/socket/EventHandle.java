@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
-public class NewPositionHandle {
+public class EventHandle {
+
     @Autowired
     private SocketSender socketSender;
 
@@ -21,6 +22,8 @@ public class NewPositionHandle {
         socketSender.sendCommentToClient(positionLog);
         log.info("Handle new position with rfid {} done!!", positionLog.getRfid());
     }
+
+
 
 
 }

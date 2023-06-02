@@ -21,7 +21,14 @@ public enum ErrorCode {
     ADD_ROLE_PERMISSION_DENIED("APP-37", "ADMIN ENTERPRISE không thể phân quyền cho tài khoản của danh nghiệp khác!", HttpStatus.BAD_REQUEST),
     ADD_ROLE_ADMIN_PERMISSION_DENIED("APP-38", "ADMIN ENTERPRISE không thể phân quyền cho ADMIN", HttpStatus.BAD_REQUEST),
     SET_CAR_INFO_PERMISSION_DENIED("APP-39", "ADMIN ENTERPRISE không thể set thông tin xe của doanh nghiệp khác!", HttpStatus.BAD_REQUEST),
-    CAR_INFO_NOT_FOUND("APP-40", "CarInfo not found!", HttpStatus.NOT_FOUND);
+    CAR_INFO_NOT_FOUND("APP-40", "CarInfo not found!", HttpStatus.NOT_FOUND),
+    ADD_CAR_AUTHOR_FAILED("APP-41", "Mỗi tài xế chỉ được gán với một xe!", HttpStatus.BAD_REQUEST),
+    DRIVER_CANT_BOOK_CAR("APP-42", "Tài xế không thể đặt xe!", HttpStatus.BAD_REQUEST),
+    NEW_TRIP_FAIL("APP-43", "Bạn đang đặt xe hoặc đang trong 1 chuyến xe!", HttpStatus.BAD_REQUEST),
+    TRIP_NOT_FOUND("APP-43", "Không tìm thấy chuyến đi!", HttpStatus.BAD_REQUEST),
+    TRIP_CANCEL_FAIL("APP-44", "Chuyến đi đã được hủy", HttpStatus.BAD_REQUEST),
+    TRIP_CANCEL_FAIL_01("APP-45", "Chuyến đi đang trong quá trình", HttpStatus.BAD_REQUEST),
+    TRIP_CANCEL_FAIL_02("APP-46", "Chuyến đi đã hoàn thành!", HttpStatus.BAD_REQUEST);
 
 
 

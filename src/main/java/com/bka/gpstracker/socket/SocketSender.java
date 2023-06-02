@@ -1,6 +1,7 @@
 package com.bka.gpstracker.socket;
 
 import com.bka.gpstracker.entity.PositionLog;
+import com.bka.gpstracker.solr.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,10 @@ public class SocketSender {
 
     public void sendCommentToClient(PositionLog positionLog) {
         simpMessagingTemplate.convertAndSend(PREFIX_TOPIC + positionLog.getRfid(), positionLog);
+    }
+
+    public void sendToDriver(Trip trip) {
+
     }
 
 }

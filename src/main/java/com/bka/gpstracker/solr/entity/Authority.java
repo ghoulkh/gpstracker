@@ -22,7 +22,7 @@ public class Authority {
     public enum Role {
         ROLE_ADMIN("ROLE_ADMIN"),
         ROLE_USER("ROLE_USER"),
-        ROLE_ENTERPRISE_ADMIN("ROLE_ENTERPRISE_ADMIN");
+        ROLE_DRIVER("ROLE_DRIVER");
         private String value;
         private Role(String value) {
             this.value = value;

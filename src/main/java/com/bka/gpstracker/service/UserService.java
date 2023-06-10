@@ -97,4 +97,8 @@ public class UserService implements UserDetailsService {
         }
         return result;
     }
+
+    public UserInfo save(UserInfo info) {
+        return userInfoRepository.save(info);
+    }
 }

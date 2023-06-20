@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,10 @@ public class CarInfoService {
     public CarInfo getByRfid(String rfid) {
         return carInfoRepository.findById(rfid).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.CAR_INFO_NOT_FOUND));
+    }
+
+    public Optional<CarInfo> findByRfid(String rfid) {
+        return carInfoRepository.findById(rfid);
     }
 
     public List<CarInfo> getAllByUsername(String username) {

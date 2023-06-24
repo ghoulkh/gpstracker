@@ -102,4 +102,21 @@ public class DriverService {
     public Set<String> getActiveUsernames() {
         return activeDrivers.values().stream().collect(Collectors.toSet());
     }
+
+    public Trip changeStatusTrip(String tripId, String status) {
+        String currentUsername = SecurityUtil.getCurrentUsername();
+        if (!TripStatus.isIN_PROGRESSOrCOMPLECTED(status))
+            throw new TrackerAppException(ErrorCode.INVALID_STATUS);
+        Trip tripToChange = tripRepository.findById(tripId).orElseThrow(() ->
+                new TrackerAppException(ErrorCode.TRIP_NOT_FOUND));
+        if (!currentUsername.equals(tripToChange.getDriver()))
+            throw new TrackerAppException(ErrorCode.INVALID_DRIVER);
+
+        tripToChange.setStatus(status);
+        return tripRepository.save(tripToChange);
+    }
+
+    public List<Trip> getAllTripByDriver(String driver) {
+        return tripRepository.getAllByDriverAndCustomStatus(driver);
+    }
 }

@@ -4,6 +4,7 @@ import com.bka.gpstracker.entity.PositionLog;
 import com.bka.gpstracker.event.CancelTripEvent;
 import com.bka.gpstracker.event.NewPositionEvent;
 import com.bka.gpstracker.event.NewTripEvent;
+import com.bka.gpstracker.event.SetDriverForTripEvent;
 import com.bka.gpstracker.solr.entity.Trip;
 import com.bka.gpstracker.solr.repository.CurrentPositionRepository;
 import com.bka.gpstracker.util.Utils;
@@ -54,6 +55,13 @@ public class EventHandle {
         Trip trip = (Trip) event.getSource();
         socketSender.sendCancelTripToAdmin(trip);
         log.info("Send event cancel trip to Admin done!, trip created by {}", trip.getCreatedBy());
+    }
+
+    @EventListener
+    @Async
+    public void handleSetDriverForTrip(SetDriverForTripEvent event) {
+        socketSender.sendToDriver(event.getTrip(), event.getDriver());
+        log.info("Send event new trip to driver: {} done!", event.getDriver());
     }
 
 }

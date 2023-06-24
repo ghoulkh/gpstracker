@@ -59,8 +59,8 @@ public class WebSocketEventListener {
     public void onApplicationEvent(SessionSubscribeEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         String destination = sha.getDestination();
-        String token = sha.getFirstNativeHeader("token");
-        diverCanDrive(token, destination, sha.getSessionId());
+//        String token = sha.getFirstNativeHeader("token");
+//        diverCanDrive(token, destination, sha.getSessionId());
         logger.info("Event subscriber with destination: {}", destination);
     }
 

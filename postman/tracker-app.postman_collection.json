@@ -588,6 +588,132 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Lấy toàn bộ tài xế",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MDEwOTA1MiwiaWF0IjoxNjg3NTE3MDUyfQ.6urDiWCcx8g2YL_z3DxZ6cru3pBmwl4tEhN3dUVUnwvmnto5uos9EI9NynuNT_ue17r0tv0xu3SLln5LeHc-Rg"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/admin/drivers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"drivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set tài xế cho chuyến đi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MDEwOTA1MiwiaWF0IjoxNjg3NTE3MDUyfQ.6urDiWCcx8g2YL_z3DxZ6cru3pBmwl4tEhN3dUVUnwvmnto5uos9EI9NynuNT_ue17r0tv0xu3SLln5LeHc-Rg"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"driver\": \"duongphi\",\r\n    \"tripId\": \"03d9abdb-d177-4c7b-9ded-629db0a35a6c\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/admin/set-driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"admin",
+								"set-driver"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tài xế",
+			"item": [
+				{
+					"name": "Lấy những chuyến xe hiện tại",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MDIyMDQ4OSwiaWF0IjoxNjg3NjI4NDg5fQ.HO_fFoqoqehJSWzI8VM2bTUL_HZIJFyjN2RSPvaeC2pOiuA-ttk_kgmESRsTYOVXa2uPeo-Z0-8rY5O9zgDqWg"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/driver/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tài xế thay đổi trạng thái",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MDIyMDQ4OSwiaWF0IjoxNjg3NjI4NDg5fQ.HO_fFoqoqehJSWzI8VM2bTUL_HZIJFyjN2RSPvaeC2pOiuA-ttk_kgmESRsTYOVXa2uPeo-Z0-8rY5O9zgDqWg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"COMPLECTED\",\r\n    \"tripId\": \"03d9abdb-d177-4c7b-9ded-629db0a35a6c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/driver/change-trip",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"change-trip"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

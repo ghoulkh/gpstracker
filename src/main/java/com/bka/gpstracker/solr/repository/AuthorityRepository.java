@@ -10,4 +10,6 @@ public interface AuthorityRepository extends SolrCrudRepository<Authority, Strin
 
     @Query("username:?0")
     List<Authority> getAllByUsername(String username);
+    @Query("role:?0")
+    List<Authority> getAllByRole(String role);
 }

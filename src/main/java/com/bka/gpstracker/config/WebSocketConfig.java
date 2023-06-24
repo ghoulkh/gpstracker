@@ -18,6 +18,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app");
-        registry.enableSimpleBroker("/rfid");   // Enables a simple in-memory broker
+        registry.enableSimpleBroker("/rfid", "/admin", "/driver");   // Enables a simple in-memory broker
     }
 }

@@ -60,13 +60,13 @@ public class WebSocketEventListener {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         String destination = sha.getDestination();
         String token = sha.getFirstNativeHeader("token");
-        String username = jwtToken.validateToken(token);
-        diverCanDrive(username, destination, sha.getSessionId());
-        logger.info("Event subscriber with username: {}, destination: {}", username, destination);
+        diverCanDrive(token, destination, sha.getSessionId());
+        logger.info("Event subscriber with destination: {}", destination);
     }
 
-    private void diverCanDrive(String username, String destination, String clientId) {
+    private void diverCanDrive(String token, String destination, String clientId) {
         if (!destination.startsWith("/driver")) return;
+        String username = jwtToken.validateToken(token);
         if (!driverService.canDrive(username)) {
             sendMsg(clientId, UNAUTHORISED, StompCommand.ERROR);
             return;

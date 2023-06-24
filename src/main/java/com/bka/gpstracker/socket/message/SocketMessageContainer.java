@@ -8,6 +8,8 @@ public class SocketMessageContainer {
     private Type type;
     public enum Type {
         NEW_TRIP,
+        TRIP_IN_PROGRESS,
+        CANCEL_TRIP,
         WARNING_MESSAGE;
     }
 

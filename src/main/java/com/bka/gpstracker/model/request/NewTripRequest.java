@@ -1,6 +1,7 @@
 package com.bka.gpstracker.model.request;
 
 
+import com.bka.gpstracker.common.TripStatus;
 import com.bka.gpstracker.solr.entity.Trip;
 import lombok.Data;
 import org.eclipse.jetty.util.ArrayTernaryTrie;
@@ -32,6 +33,7 @@ public class NewTripRequest {
         result.setCreatedAt(new Date());
         result.setCreatedBy(currentUsername);
         result.setId(UUID.randomUUID().toString());
+        result.setStatus(TripStatus.NEW);
         return result;
     }
 }

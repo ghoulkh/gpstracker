@@ -1,6 +1,7 @@
 package com.bka.gpstracker.socket;
 
 import com.bka.gpstracker.entity.PositionLog;
+import com.bka.gpstracker.event.CancelTripEvent;
 import com.bka.gpstracker.event.NewPositionEvent;
 import com.bka.gpstracker.event.NewTripEvent;
 import com.bka.gpstracker.solr.entity.Trip;
@@ -22,9 +23,6 @@ public class EventHandle {
     @Autowired
     private SocketSender socketSender;
 
-    @Autowired
-    private CurrentPositionRepository currentPositionRepository;
-
     @EventListener
     @Async
     public void handleNewPosition(NewPositionEvent newPositionEvent) {
@@ -36,16 +34,26 @@ public class EventHandle {
     @Async
     public void handNewTrip(NewTripEvent newTripEvent) {
         Trip trip = (Trip) newTripEvent.getSource();
-        List<String> sendToUsers = new ArrayList<>();
-        currentPositionRepository.findAll().forEach(currentPosition -> {
-            if (Utils.isMatch(currentPosition, trip))
-                sendToUsers.add(currentPosition.getUsername());
-        });
+        socketSender.sendToAdmin(trip);
+        log.info("Send event new trip to Admin done!, created by {}", trip.getCreatedBy());
+//        List<String> sendToUsers = new ArrayList<>();
+//        currentPositionRepository.findAll().forEach(currentPosition -> {
+//            if (Utils.isMatch(currentPosition, trip))
+//                sendToUsers.add(currentPosition.getUsername());
+//        });
+//
+//        for (String driver : sendToUsers) {
+//            socketSender.sendToDriver(trip, driver);
+//        }
+//        log.info("Send new trip to driver done with usernames: {}", sendToUsers);
+    }
 
-        for (String driver : sendToUsers) {
-            socketSender.sendToDriver(trip, driver);
-        }
-        log.info("Send new trip to driver done with usernames: {}", sendToUsers);
+    @EventListener
+    @Async
+    public void handleCancelTrip(CancelTripEvent event) {
+        Trip trip = (Trip) event.getSource();
+        socketSender.sendCancelTripToAdmin(trip);
+        log.info("Send event cancel trip to Admin done!, trip created by {}", trip.getCreatedBy());
     }
 
 }

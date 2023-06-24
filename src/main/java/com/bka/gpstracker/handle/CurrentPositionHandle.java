@@ -34,7 +34,7 @@ public class CurrentPositionHandle {
     @Async
     public void handleNewPosition(NewPositionEvent newPositionEvent) {
         PositionLog positionLog = (PositionLog) newPositionEvent.getSource();
-        CarInfo carInfo = carInfoRepository.getById(positionLog.getRfid());
+        CarInfo carInfo = carInfoRepository.getByRfid(positionLog.getRfid());
         if (carInfo == null) {
             log.info("carInfo not found with positionLog {}", positionLog);
             return;

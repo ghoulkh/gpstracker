@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api")
@@ -27,5 +28,10 @@ public class BookCarController extends BaseController {
     public ResponseEntity<Response> cancelTrip(@PathVariable String tripId) {
         bookCarService.cancelTrip(tripId);
         return makeResponseOk();
+    }
+
+    @GetMapping("/me/trips")
+    public ResponseEntity<List<Trip>> getAllTrip() {
+        return ResponseEntity.ok(bookCarService.getAllTrip());
     }
 }

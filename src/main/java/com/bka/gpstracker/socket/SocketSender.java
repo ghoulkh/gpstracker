@@ -15,6 +15,7 @@ public class SocketSender {
     private SimpMessagingTemplate simpMessagingTemplate;
     private static final String PREFIX_TOPIC = "/rfid/";
     private static final String DRIVER_PREFIX = "/driver/";
+    private static final String ADMIN_TOPIC = "/admin/trips";
 
     public void sendCommentToClient(PositionLog positionLog) {
         simpMessagingTemplate.convertAndSend(PREFIX_TOPIC + positionLog.getRfid(), positionLog);
@@ -23,6 +24,16 @@ public class SocketSender {
     public void sendToDriver(Trip trip, String username) {
         SocketMessageContainer socketMessageContainer = new SocketMessageContainer(SocketMessageContainer.Type.NEW_TRIP, trip);
         simpMessagingTemplate.convertAndSend(DRIVER_PREFIX + username, socketMessageContainer);
+    }
+
+    public void sendToAdmin(Trip trip) {
+        SocketMessageContainer socketMessageContainer = new SocketMessageContainer(SocketMessageContainer.Type.NEW_TRIP, trip);
+        simpMessagingTemplate.convertAndSend(ADMIN_TOPIC, socketMessageContainer);
+    }
+
+    public void sendCancelTripToAdmin(Trip trip) {
+        SocketMessageContainer socketMessageContainer = new SocketMessageContainer(SocketMessageContainer.Type.CANCEL_TRIP, trip);
+        simpMessagingTemplate.convertAndSend(ADMIN_TOPIC, socketMessageContainer);
     }
 
     public void sendWarningToDriver(String username) {

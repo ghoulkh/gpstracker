@@ -31,7 +31,8 @@ public enum ErrorCode {
     TRIP_CANCEL_FAIL_02("APP-46", "Chuyến đi đã hoàn thành!", HttpStatus.BAD_REQUEST),
     DRIVER_IS_BUSY("APP-47", "Bạn chưa hoàn thành 1 chuyến xe!", HttpStatus.BAD_REQUEST),
     TRIP_CANCELED_OR_IN_PROGRESS("APP-48", "Chuyến xe đã được hủy hoặc có người khác nhận!", HttpStatus.BAD_REQUEST),
-    CURRENT_TRIP_INVALID("APP-49", "Đây không phải là chuyến xe hiện tại của bạn!", HttpStatus.BAD_REQUEST);
+    CURRENT_TRIP_INVALID("APP-49", "Đây không phải là chuyến xe hiện tại của bạn!", HttpStatus.BAD_REQUEST),
+    INVALID_STATUS("APP-50", "Status phải là 1 trong 4 giá trị 'NEW' 'IN_PROGRESS' 'COMPLECTED' 'CANCELED'", HttpStatus.BAD_REQUEST);
 
 
 

@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface CarInfoRepository extends JpaRepository<CarInfo, String> {
     List<CarInfo> findAllByUsername(String username);
-
-
+    CarInfo getByRfid(String rfid);
 }

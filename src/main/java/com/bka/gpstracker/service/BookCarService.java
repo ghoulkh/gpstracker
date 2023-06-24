@@ -12,7 +12,12 @@ import com.bka.gpstracker.solr.repository.TripRepository;
 import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BookCarService {
@@ -28,14 +33,16 @@ public class BookCarService {
             throw new TrackerAppException(ErrorCode.DRIVER_CANT_BOOK_CAR);
         String currentUsername = SecurityUtil.getCurrentUsername();
         Trip tripToSave = request.toTrip(currentUsername);
-        canRegisterNewTrip(currentUsername);
         applicationEventPublisher.publishEvent(new NewTripEvent(tripToSave));
         return tripRepository.save(tripToSave);
     }
 
-    public void canRegisterNewTrip(String username) {
-        if (tripRepository.findAllByCreatedByAndStatusNEWOrInProgress(username).isEmpty()) return;
-        throw new TrackerAppException(ErrorCode.NEW_TRIP_FAIL);
+
+    public List<Trip> getAllTrip() {
+        String currentUsername = SecurityUtil.getCurrentUsername();
+        Pageable paging = PageRequest.of(0, 100000, Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<Trip> trips = tripRepository.findAllByCreatedBy(currentUsername, paging);
+        return trips;
     }
 
     public void cancelTrip(String tripId) {

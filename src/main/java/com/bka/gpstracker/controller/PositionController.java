@@ -36,7 +36,7 @@ public class PositionController {
     }
 
     @GetMapping("/positions")
-    public ResponseEntity<List<Position >> getByRange(@RequestParam String rfid,
+    public ResponseEntity<List<Position>> getByRange(@RequestParam String rfid,
                                                      @RequestParam(name = "start_time", required = false) Long startTime,
                                                      @RequestParam(name = "end_time", required = false) Long endTime) {
         return ResponseEntity.ok(positionService.getByRange(rfid, startTime, endTime));

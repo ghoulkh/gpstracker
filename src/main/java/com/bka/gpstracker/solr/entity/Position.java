@@ -5,7 +5,6 @@ import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
 import javax.persistence.Id;
-import java.util.Date;
 
 @Data
 @SolrDocument(solrCoreName = "position_log")
@@ -21,4 +20,6 @@ public class Position {
     private String lat;
     @Indexed(name = "lon", type = "string")
     private String lon;
+    @Indexed(name = "speed", type = "string")
+    private String speed;
 }

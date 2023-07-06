@@ -26,4 +26,5 @@ public class AdminController {
     public ResponseEntity<UserResponse> setPermission(@RequestBody @Valid PermissionRequest request) {
         return ResponseEntity.ok(adminService.addAuthorityWithUsername(request.getUsername(), Authority.Role.valueOf(request.getRole())));
     }
+
 }

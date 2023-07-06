@@ -13,4 +13,8 @@ public interface TripRepository extends SolrCrudRepository<Trip, String> {
     List<Trip> findAllByCreatedBy(String username, Pageable pageable);
     @Query("status:?0")
     List<Trip> getAllByStatus(String status, Pageable pageable);
+
+    @Query("driver:?0 AND status:(NEW SENT_TO_DRIVER IN_PROGRESS)")
+    List<Trip> getAllByDriverAndCustomStatus(String driver);
+
 }

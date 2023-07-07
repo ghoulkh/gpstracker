@@ -24,4 +24,4 @@ app:
     password: admin
 
 solr:
-  url: http://35.198.232.49:8500/solr
+  url: http://34.124.232.198:8500/solr

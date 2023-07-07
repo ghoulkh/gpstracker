@@ -5,7 +5,7 @@ import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 import org.springframework.data.annotation.Id;
 
-@SolrDocument(solrCoreName = "currentPosition")
+@SolrDocument(solrCoreName = "position")
 @Data
 public class CurrentPosition {
     @Id

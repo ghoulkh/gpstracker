@@ -461,6 +461,7 @@
   <field name="avaUrl" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="email" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="phone" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="status" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="createdBy" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="isBusy" type="boolean" multiValued="false" indexed="true" required="false" stored="true"/>
 

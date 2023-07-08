@@ -25,3 +25,8 @@ app:
 
 solr:
   url: http://34.124.232.198:8500/solr
+
+ftp:
+  dir:
+    local: /image
+    remote: www.gpstracker.somee.com/dataImage

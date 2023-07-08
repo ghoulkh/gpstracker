@@ -35,6 +35,8 @@ public class UserInfo {
     private Boolean isBusy;
     @Indexed(name = "currentTripId", type = "string")
     private String currentTripId;
+    @Indexed(name = "status", type = "string")
+    private String status;
     public Boolean getIsBusy() {
         return this.isBusy == null ? false : isBusy;
     }

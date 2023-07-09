@@ -1,10 +1,8 @@
 package com.bka.gpstracker.socket;
 
+import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.entity.PositionLog;
-import com.bka.gpstracker.event.CancelTripEvent;
-import com.bka.gpstracker.event.NewPositionEvent;
-import com.bka.gpstracker.event.NewTripEvent;
-import com.bka.gpstracker.event.SetDriverForTripEvent;
+import com.bka.gpstracker.event.*;
 import com.bka.gpstracker.solr.entity.Trip;
 import com.bka.gpstracker.solr.repository.CurrentPositionRepository;
 import com.bka.gpstracker.util.Utils;
@@ -30,6 +28,14 @@ public class EventHandle {
         PositionLog positionLog = (PositionLog) newPositionEvent.getSource();
         socketSender.sendCommentToClient(positionLog);
         log.info("Handle new position with rfid {} done!!", positionLog.getRfid());
+    }
+
+    @EventListener
+    @Async
+    public void handleNewCheckIn(NewCheckInEvent event) {
+        CheckIn checkIn = (CheckIn) event.getSource();
+        socketSender.sendCheckInToUser(checkIn);
+        log.info("Send new check in to user done {}", checkIn);
     }
     @EventListener
     @Async

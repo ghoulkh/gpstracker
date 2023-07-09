@@ -1,5 +1,6 @@
 package com.bka.gpstracker.socket;
 
+import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.entity.PositionLog;
 import com.bka.gpstracker.socket.message.SocketCode;
 import com.bka.gpstracker.socket.message.SocketMessage;
@@ -16,6 +17,8 @@ public class SocketSender {
     private static final String PREFIX_TOPIC = "/rfid/";
     private static final String DRIVER_PREFIX = "/driver/";
     private static final String ADMIN_TOPIC = "/admin/trips";
+    private static final String CHECK_IN_TOPIC = "/checkin/realtime";
+
 
     public void sendCommentToClient(PositionLog positionLog) {
         simpMessagingTemplate.convertAndSend(PREFIX_TOPIC + positionLog.getRfid(), positionLog);
@@ -34,6 +37,10 @@ public class SocketSender {
     public void sendCancelTripToAdmin(Trip trip) {
         SocketMessageContainer socketMessageContainer = new SocketMessageContainer(SocketMessageContainer.Type.CANCEL_TRIP, trip);
         simpMessagingTemplate.convertAndSend(ADMIN_TOPIC, socketMessageContainer);
+    }
+
+    public void sendCheckInToUser(CheckIn checkIn) {
+        simpMessagingTemplate.convertAndSend(CHECK_IN_TOPIC, checkIn);
     }
 
     public void sendWarningToDriver(String username) {

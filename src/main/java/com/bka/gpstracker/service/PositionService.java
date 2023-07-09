@@ -5,6 +5,7 @@ import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.event.NewPositionEvent;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.request.PositionLogRequest;
+import com.bka.gpstracker.model.response.PositionResponse;
 import com.bka.gpstracker.repository.PositionLogRepository;
 import com.bka.gpstracker.solr.entity.Position;
 import com.bka.gpstracker.solr.repository.PositionLogSolrRepository;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -40,9 +42,10 @@ public class PositionService {
         log.info("push to solr new position with rfid {}", positionLog.getRfid());
     }
 
-    public List<Position> getByRange(String rfid, Long startTime, Long endTime) {
+    public List<PositionResponse> getByRange(String rfid, Long startTime, Long endTime) {
         Pageable paging = PageRequest.of(0, 100000, Sort.by(Sort.Direction.DESC, "createdAt"));
-        return positionLogSolrRepository.getByQuery(buildRangeTimeQuery(rfid, startTime, endTime), paging);
+        return positionLogSolrRepository.getByQuery(buildRangeTimeQuery(rfid, startTime, endTime), paging).stream()
+                .map(PositionResponse::from).collect(Collectors.toList());
     }
 
     private String buildRangeTimeQuery(String rfid, Long startTime, Long endTime) {

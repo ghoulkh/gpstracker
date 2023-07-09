@@ -3,8 +3,8 @@ package com.bka.gpstracker.controller;
 import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.PositionLog;
 import com.bka.gpstracker.model.request.PositionLogRequest;
+import com.bka.gpstracker.model.response.PositionResponse;
 import com.bka.gpstracker.service.PositionService;
-import com.bka.gpstracker.solr.entity.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -36,9 +36,9 @@ public class PositionController {
     }
 
     @GetMapping("/positions")
-    public ResponseEntity<List<Position>> getByRange(@RequestParam String rfid,
-                                                     @RequestParam(name = "start_time", required = false) Long startTime,
-                                                     @RequestParam(name = "end_time", required = false) Long endTime) {
+    public ResponseEntity<List<PositionResponse>> getByRange(@RequestParam String rfid,
+                                                             @RequestParam(name = "start_time", required = false) Long startTime,
+                                                             @RequestParam(name = "end_time", required = false) Long endTime) {
         return ResponseEntity.ok(positionService.getByRange(rfid, startTime, endTime));
     }
 }

@@ -2,15 +2,14 @@ package com.bka.gpstracker.controller;
 
 import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.CarInfo;
+import com.bka.gpstracker.model.response.Response;
 import com.bka.gpstracker.service.CarInfoService;
 import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +31,12 @@ public class CarInfoController {
     public ResponseEntity<List<CarInfo>> getCarInfo() {
         String currentUsername = SecurityUtil.getCurrentUsername();
         return ResponseEntity.ok(carInfoService.getByUsername(currentUsername));
+    }
+
+    @PostMapping("/test/check_in/{rfid}")
+    public ResponseEntity<Response> testCheckIn(@PathVariable String rfid) {
+        carInfoService.testCheckIn(rfid);
+        return ResponseEntity.ok(new Response());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bka.gpstracker.entity;
 
+import com.bka.gpstracker.common.DriverStatus;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -28,13 +29,13 @@ public class CarInfo {
 
     public String getStatus() {
         if (this.lastCheckInAt == null) {
-            return "INACTIVE";
+            return DriverStatus.INACTIVE;
         }
         Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 6);
         if (this.lastCheckInAt.before(sixHoursAgo)) {
-            return "INACTIVE";
+            return DriverStatus.INACTIVE;
         }
-        return "ACTIVE";
+        return DriverStatus.ACTIVE;
     }
 
 }

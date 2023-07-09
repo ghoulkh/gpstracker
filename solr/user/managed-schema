@@ -455,6 +455,7 @@
   <field name="username" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="enterpriseCode" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
   <field name="createdDate" type="pdate" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="lastCheckInAt" type="pdate" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="lastModifiedDate" type="pdate" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="password" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
   <field name="fullName" type="string" multiValued="false" indexed="false" required="false" stored="true"/>

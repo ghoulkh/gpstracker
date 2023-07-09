@@ -1,5 +1,6 @@
 package com.bka.gpstracker.service;
 
+import com.bka.gpstracker.common.DriverStatus;
 import com.bka.gpstracker.common.TripStatus;
 import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.event.SetDriverForTripEvent;
@@ -10,6 +11,7 @@ import com.bka.gpstracker.solr.entity.Trip;
 import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.solr.repository.AuthorityRepository;
 import com.bka.gpstracker.solr.repository.TripRepository;
+import com.bka.gpstracker.solr.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +27,8 @@ import java.util.stream.Collectors;
 public class TripAdminService {
     @Autowired
     private TripRepository tripRepository;
-
+    @Autowired
+    private UserInfoRepository userInfoRepository;
     @Autowired
     private AuthorityRepository authorityRepository;
     @Autowired
@@ -54,9 +57,18 @@ public class TripAdminService {
         if (!isDriver(driver))
             throw new TrackerAppException(ErrorCode.NOT_DRIVER);
         tripToSet.setDriver(driver);
+        checkDriverStatus(driver);
         tripToSet.setStatus(TripStatus.SENT_TO_DRIVER);
         tripRepository.save(tripToSet);
         applicationEventPublisher.publishEvent(new SetDriverForTripEvent(tripToSet, driver));
+    }
+
+    private void checkDriverStatus(String username) {
+        UserInfo userInfo = userInfoRepository.getByUsername(username);
+        if (userInfo == null)
+            throw new TrackerAppException(ErrorCode.USER_NOT_FOUND);
+        if (userInfo.getDriverStatus().equals(DriverStatus.INACTIVE))
+            throw new TrackerAppException(ErrorCode.DRIVER_INACTIVE);
     }
 
     private boolean isDriver(String username) {

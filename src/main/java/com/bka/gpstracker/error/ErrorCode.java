@@ -34,7 +34,8 @@ public enum ErrorCode {
     CURRENT_TRIP_INVALID("APP-49", "Đây không phải là chuyến xe hiện tại của bạn!", HttpStatus.BAD_REQUEST),
     INVALID_STATUS("APP-50", "Status phải là 1 trong 4 giá trị 'NEW' 'IN_PROGRESS' 'COMPLECTED' 'CANCELED'", HttpStatus.BAD_REQUEST),
     INVALID_DRIVER("APP-52", "Bạn không phải tài xế của chuyến đi này!", HttpStatus.BAD_REQUEST),
-    NOT_DRIVER("APP-53", "Không phải là một tài xế", HttpStatus.BAD_REQUEST);
+    NOT_DRIVER("APP-53", "Không phải là một tài xế", HttpStatus.BAD_REQUEST),
+    DRIVER_INACTIVE("APP-54", "Tài xế đang không hoat dong. Vui lòng chọn tài xế khác!", HttpStatus.BAD_REQUEST);
 
 
 

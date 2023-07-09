@@ -1,12 +1,12 @@
 package com.bka.gpstracker.solr.entity;
 
+import com.bka.gpstracker.common.DriverStatus;
 import com.bka.gpstracker.entity.User;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -17,6 +17,8 @@ public class UserInfo {
     private String username;
     @Indexed(name = "createdDate", type = "date")
     private Date createdDate = new Date();
+    @Indexed(name = "lastCheckInAt", type = "date")
+    private Date lastCheckInAt;
     @Indexed(name = "lastModifiedDate", type = "date")
     private Date lastModifiedDate = new Date();
     @Indexed(name = "password", type = "string")
@@ -46,6 +48,17 @@ public class UserInfo {
         result.setUsername(this.username);
         result.setPassword("fake-password");
         return result;
+    }
+
+    public String getDriverStatus() {
+        if (this.lastCheckInAt == null) {
+            return DriverStatus.INACTIVE;
+        }
+        Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 6);
+        if (this.lastCheckInAt.before(sixHoursAgo)) {
+            return DriverStatus.INACTIVE;
+        }
+        return DriverStatus.ACTIVE;
     }
 
 }

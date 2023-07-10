@@ -1,5 +1,6 @@
 package com.bka.gpstracker.solr.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
@@ -29,6 +30,7 @@ public class Trip {
     private String notes;
     @Indexed(name = "createdBy", type = "string")
     private String createdBy;
+    @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     @Indexed(name = "createdAt", type = "date")
     private Date createdAt;
     @Indexed(name = "status", type = "string")

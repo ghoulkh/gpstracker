@@ -1,5 +1,6 @@
 package com.bka.gpstracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ public class CheckIn {
     private Long id;
     @Column(name = "RFID")
     private String rfid;
+    @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "Time")
     private Date date;
 }

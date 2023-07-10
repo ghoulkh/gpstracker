@@ -66,7 +66,8 @@ public class EventHandle {
     @EventListener
     @Async
     public void handleSetDriverForTrip(SetDriverForTripEvent event) {
-        socketSender.sendToDriver(event.getTrip(), event.getDriver());
+        socketSender.sendEventTripInProgressToDriver(event.getTrip(), event.getDriver());
+        socketSender.sendEventTripInProgressToUser(event.getTrip(), event.getTrip().getCreatedBy());
         log.info("Send event new trip to driver: {} done!", event.getDriver());
     }
 

@@ -21,6 +21,7 @@ public class CheckInHandle {
     private CarInfoRepository carInfoRepository;
     @Autowired
     private UserInfoRepository userInfoRepository;
+
     @EventListener
     @Async
     public void handleNewCheckIn(NewCheckInEvent event) {

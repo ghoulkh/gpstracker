@@ -17,11 +17,21 @@ public class SocketSender {
     private static final String PREFIX_TOPIC = "/rfid/";
     private static final String DRIVER_PREFIX = "/driver/";
     private static final String ADMIN_TOPIC = "/admin/trips";
+    private static final String USER_PREFIX = "/user/";
     private static final String CHECK_IN_TOPIC = "/checkin/realtime";
 
 
     public void sendCommentToClient(PositionLog positionLog) {
         simpMessagingTemplate.convertAndSend(PREFIX_TOPIC + positionLog.getRfid(), positionLog);
+    }
+
+    public void sendEventTripInProgressToUser(Trip trip, String username) {
+        SocketMessageContainer container = new SocketMessageContainer(SocketMessageContainer.Type.TRIP_IN_PROGRESS, trip);
+        simpMessagingTemplate.convertAndSend(USER_PREFIX + username, container);
+    }
+    public void sendEventTripInProgressToDriver(Trip trip, String username) {
+        SocketMessageContainer container = new SocketMessageContainer(SocketMessageContainer.Type.TRIP_IN_PROGRESS, trip);
+        simpMessagingTemplate.convertAndSend(DRIVER_PREFIX + username, container);
     }
 
     public void sendToDriver(Trip trip, String username) {

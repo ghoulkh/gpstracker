@@ -1,8 +1,11 @@
 package com.bka.gpstracker.util;
 
+import com.bka.gpstracker.common.DriverStatus;
 import com.bka.gpstracker.model.request.NewTripRequest;
 import com.bka.gpstracker.solr.entity.CurrentPosition;
 import com.bka.gpstracker.solr.entity.Trip;
+
+import java.util.Date;
 
 public class Utils {
 
@@ -30,5 +33,17 @@ public class Utils {
         distance = Math.pow(distance, 2);
 
         return Math.sqrt(distance);
+    }
+
+
+    public static String getStatusFromLastCheckIn(Date lastCheckInAt) {
+        if (lastCheckInAt == null) {
+            return DriverStatus.INACTIVE;
+        }
+        Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 4);
+        if (lastCheckInAt.before(sixHoursAgo)) {
+            return DriverStatus.INACTIVE;
+        }
+        return DriverStatus.ACTIVE;
     }
 }

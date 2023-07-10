@@ -1,6 +1,8 @@
 package com.bka.gpstracker.entity;
 
 import com.bka.gpstracker.common.DriverStatus;
+import com.bka.gpstracker.util.Utils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -24,18 +26,12 @@ public class CarInfo {
     private String drivingLicense;
     @Column(name = "userName")
     private String username;
+    @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "last_check_in_at")
     private Date lastCheckInAt;
 
     public String getStatus() {
-        if (this.lastCheckInAt == null) {
-            return DriverStatus.INACTIVE;
-        }
-        Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 6);
-        if (this.lastCheckInAt.before(sixHoursAgo)) {
-            return DriverStatus.INACTIVE;
-        }
-        return DriverStatus.ACTIVE;
+        return Utils.getStatusFromLastCheckIn(this.lastCheckInAt);
     }
 
 }

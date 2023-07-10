@@ -1,7 +1,7 @@
 package com.bka.gpstracker.solr.entity;
 
-import com.bka.gpstracker.common.DriverStatus;
 import com.bka.gpstracker.entity.User;
+import com.bka.gpstracker.util.Utils;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
@@ -51,14 +51,7 @@ public class UserInfo {
     }
 
     public String getDriverStatus() {
-        if (this.lastCheckInAt == null) {
-            return DriverStatus.INACTIVE;
-        }
-        Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 6);
-        if (this.lastCheckInAt.before(sixHoursAgo)) {
-            return DriverStatus.INACTIVE;
-        }
-        return DriverStatus.ACTIVE;
+        return Utils.getStatusFromLastCheckIn(this.lastCheckInAt);
     }
 
 }

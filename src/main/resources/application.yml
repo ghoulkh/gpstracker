@@ -27,6 +27,9 @@ solr:
   url: http://34.124.232.198:8500/solr
 
 ftp:
+  hostname: gpstracker.somee.com
+  username: gpstracker
+  password: Daotak1310.
   dir:
     local: /image
     remote: www.gpstracker.somee.com/dataImage

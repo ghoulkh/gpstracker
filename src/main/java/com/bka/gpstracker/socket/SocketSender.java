@@ -5,6 +5,7 @@ import com.bka.gpstracker.entity.PositionLog;
 import com.bka.gpstracker.socket.message.SocketCode;
 import com.bka.gpstracker.socket.message.SocketMessage;
 import com.bka.gpstracker.socket.message.SocketMessageContainer;
+import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.solr.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -18,6 +19,7 @@ public class SocketSender {
     private static final String DRIVER_PREFIX = "/driver/";
     private static final String ADMIN_TOPIC = "/admin/trips";
     private static final String USER_PREFIX = "/user/";
+    private static final String ADMIN_DELIVERY_TOPIC = "/admin/deliveries";
     private static final String CHECK_IN_TOPIC = "/checkin/realtime";
 
 
@@ -56,6 +58,14 @@ public class SocketSender {
     public void sendWarningToDriver(String username) {
         SocketMessageContainer socketMessageContainer = new SocketMessageContainer(SocketMessageContainer.Type.WARNING_MESSAGE, new SocketMessage(SocketCode.WARNING_MESSAGE));
         simpMessagingTemplate.convertAndSend(DRIVER_PREFIX + username, socketMessageContainer);
+    }
+
+    public void sendDeliveryToDriver(DeliveryInfo deliveryInfo, SocketMessageContainer.Type type) {
+        simpMessagingTemplate.convertAndSend(DRIVER_PREFIX, new SocketMessageContainer(type, deliveryInfo));
+    }
+
+    public void sendDeliveryToAdmin(DeliveryInfo deliveryInfo, SocketMessageContainer.Type type) {
+        simpMessagingTemplate.convertAndSend(ADMIN_DELIVERY_TOPIC, new SocketMessageContainer(type, deliveryInfo));
     }
 
 }

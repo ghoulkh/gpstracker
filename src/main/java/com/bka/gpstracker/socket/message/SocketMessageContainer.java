@@ -10,7 +10,12 @@ public class SocketMessageContainer {
         NEW_TRIP,
         TRIP_IN_PROGRESS,
         CANCEL_TRIP,
-        WARNING_MESSAGE;
+        WARNING_MESSAGE,
+        NEW_DELIVERY,
+        UPDATE_DELIVERY,
+        DELIVERY_IN_PROGRESS,
+        DELIVERY_CANCEL,
+        DELIVERY_COMPLETED;
     }
 
     public SocketMessageContainer(Type type, Object data) {

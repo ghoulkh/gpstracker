@@ -14,10 +14,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DriverDeliveryService {
+public class DeliveryDriverService {
     @Autowired
     private DeliveryInfoRepository deliveryInfoRepository;
 
+    @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
     public List<DeliveryInfo> getByDriverUsername(String driverUsername) {
@@ -27,6 +28,8 @@ public class DriverDeliveryService {
     public DeliveryInfo driverStartDelivery(String id) {
         DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND));
+        if (!deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.NEW))
+            throw new TrackerAppException(ErrorCode.BAD_REQUEST);
         deliveryInfo.setDeliveryStatus(DeliveryStatus.IN_PROGRESS);
         DeliveryInfo result = deliveryInfoRepository.save(deliveryInfo);
         applicationEventPublisher.publishEvent(new InProgressDeliveryEvent(result));
@@ -36,6 +39,8 @@ public class DriverDeliveryService {
     public DeliveryInfo driverCompletedDelivery(String id) {
         DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND));
+        if (!deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.IN_PROGRESS))
+            throw new TrackerAppException(ErrorCode.BAD_REQUEST);
         deliveryInfo.setDeliveryStatus(DeliveryStatus.COMPLETED);
         DeliveryInfo result = deliveryInfoRepository.save(deliveryInfo);
         applicationEventPublisher.publishEvent(new CompletedDeliveryEvent(result));

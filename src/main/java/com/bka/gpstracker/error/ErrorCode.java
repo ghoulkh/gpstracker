@@ -35,7 +35,9 @@ public enum ErrorCode {
     INVALID_STATUS("APP-50", "Status phải là 1 trong 4 giá trị 'NEW' 'IN_PROGRESS' 'COMPLECTED' 'CANCELED'", HttpStatus.BAD_REQUEST),
     INVALID_DRIVER("APP-52", "Bạn không phải tài xế của chuyến đi này!", HttpStatus.BAD_REQUEST),
     NOT_DRIVER("APP-53", "Không phải là một tài xế", HttpStatus.BAD_REQUEST),
-    DRIVER_INACTIVE("APP-54", "Tài xế đang không hoat dong. Vui lòng chọn tài xế khác!", HttpStatus.BAD_REQUEST);
+    DRIVER_INACTIVE("APP-54", "Tài xế đang không hoat dong. Vui lòng chọn tài xế khác!", HttpStatus.BAD_REQUEST),
+    DELIVERY_NOT_FOUND("APP-55", "delivery not found!", HttpStatus.NOT_FOUND),
+    DRIVER_USERNAME_INVALID("APP-56", "driver username invalid!", HttpStatus.BAD_REQUEST);
 
 
 

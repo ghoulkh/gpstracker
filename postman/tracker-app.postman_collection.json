@@ -716,6 +716,268 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Admin quản lý chuyến hàng",
+			"item": [
+				{
+					"name": "Tạo yêu cầu giao hàng",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MjA3OTI4MywiaWF0IjoxNjg5NDg3MjgzfQ.yPG3CmqfuBU0vGrm-cPKwC-0NlzC-fFybZclOOt23ljcO3vyHwcSbHuTgmqOHaaspicEQ5uxukucjS3ZL3mAqA"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fromAddress\":\"Yên hoà cầu giấy\",\n    \"toAddress\": \"Long biên\",\n    \"driverUsername\":\"phiduong\",\n    \"fullNameReceiver\":\"Nguyễn uyển nhi\",\n    \"phoneNumberReceiver\":\"082666017\",\n    \"emailReceiver\":\"1203ddp@gmail.com\",\n    \"senderEmail\":\"1203ddp@gmail.com\",\n    \"senderFullName\":\"DD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/delivery",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"delivery"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chỉnh sửa đơn giao hàng",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MjA3OTI4MywiaWF0IjoxNjg5NDg3MjgzfQ.yPG3CmqfuBU0vGrm-cPKwC-0NlzC-fFybZclOOt23ljcO3vyHwcSbHuTgmqOHaaspicEQ5uxukucjS3ZL3mAqA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fromAddress\":\"Yên hoà cầu giấy\",\n    \"toAddress\": \"Long biên\",\n    \"driverUsername\":\"phiduong\",\n    \"fullNameReceiver\":\"Nguyễn uyển nhi2\",\n    \"phoneNumberReceiver\":\"082666017\",\n    \"emailReceiver\":\"1203ddp@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/delivery/2e5b83ef-1548-4f3c-ac59-f05153be3a3a",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"delivery",
+								"2e5b83ef-1548-4f3c-ac59-f05153be3a3a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lấy danh sách các chuyến hàng đã tạo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MjA3OTI4MywiaWF0IjoxNjg5NDg3MjgzfQ.yPG3CmqfuBU0vGrm-cPKwC-0NlzC-fFybZclOOt23ljcO3vyHwcSbHuTgmqOHaaspicEQ5uxukucjS3ZL3mAqA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/deliveries?page_index=1&page_size=10&created_by=admin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deliveries"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "created_by",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tài xế xem đơn hàng",
+			"item": [
+				{
+					"name": "Tài xế xem lịch sử các đơn hàng của mình",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MjA4MTEwMCwiaWF0IjoxNjg5NDg5MTAwfQ.IqGyrRCYMPJlLj-kAJXxp50hg2P0UFsUSvZOmkqpQyvlVs6k7s8cl1diy9tJsvswv1h-2I733i7fnOVwkl8dzA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/me/driver/deliveries?page_index=1&page_size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"me",
+								"driver",
+								"deliveries"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "created_by",
+									"value": "admin",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tài xế update trạng thái in progress cho đơn hàng",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MjA4MTEwMCwiaWF0IjoxNjg5NDg5MTAwfQ.IqGyrRCYMPJlLj-kAJXxp50hg2P0UFsUSvZOmkqpQyvlVs6k7s8cl1diy9tJsvswv1h-2I733i7fnOVwkl8dzA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/driver/start-delivery/2ef7f02f-7290-45eb-816f-ee69d1732d9c",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"start-delivery",
+								"2ef7f02f-7290-45eb-816f-ee69d1732d9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tài xế update trạng thái hoàn thành cho đơn hàng",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MjA4MTEwMCwiaWF0IjoxNjg5NDg5MTAwfQ.IqGyrRCYMPJlLj-kAJXxp50hg2P0UFsUSvZOmkqpQyvlVs6k7s8cl1diy9tJsvswv1h-2I733i7fnOVwkl8dzA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/driver/completed-delivery/2ef7f02f-7290-45eb-816f-ee69d1732d9c",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"completed-delivery",
+								"2ef7f02f-7290-45eb-816f-ee69d1732d9c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Người nhận hàng",
+			"item": [
+				{
+					"name": "người nhận hàng xem đơn hàng",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/delivery/607f3db0-ef29-4f91-a803-c229f7f115d2/email-receiver/1203ddp@gmail.com",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"delivery",
+								"607f3db0-ef29-4f91-a803-c229f7f115d2",
+								"email-receiver",
+								"1203ddp@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

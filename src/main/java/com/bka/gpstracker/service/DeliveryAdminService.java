@@ -18,15 +18,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AdminDeliveryService {
+public class DeliveryAdminService {
 
+    @Autowired
+    private UserService userService;
     @Autowired
     private DeliveryInfoRepository deliveryInfoRepository;
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    public DeliveryInfo registrationDelivery(NewDeliveryRequest request) {
-        DeliveryInfo result = deliveryInfoRepository.save(request.toDeliveryInfo());
+    public DeliveryInfo registrationDelivery(NewDeliveryRequest request, String currentUsername) {
+        userService.findByUsername(request.getDriverUsername()).orElseThrow(() ->
+                new TrackerAppException(ErrorCode.DRIVER_USERNAME_INVALID));
+        DeliveryInfo result = deliveryInfoRepository.save(request.toDeliveryInfo(currentUsername));
         applicationEventPublisher.publishEvent(new NewDeliveryEvent(result));
         return result;
     }
@@ -35,6 +39,10 @@ public class AdminDeliveryService {
         DeliveryInfo deliveryToUpdate = deliveryInfoRepository.findById(id).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND));
         updateDeliveryRequest.updateDelivery(deliveryToUpdate);
+        if (updateDeliveryRequest.getDriverUsername() == null) {
+            userService.findByUsername(updateDeliveryRequest.getDriverUsername()).orElseThrow(() ->
+                    new TrackerAppException(ErrorCode.DRIVER_USERNAME_INVALID));
+        }
 
         DeliveryInfo result = deliveryInfoRepository.save(deliveryToUpdate);
         applicationEventPublisher.publishEvent(new UpdateDeliveryEvent(deliveryToUpdate, result));
@@ -46,7 +54,7 @@ public class AdminDeliveryService {
         if (createdBy == null) {
             createdBy = "*";
         }
-        return deliveryInfoRepository.getAllByCreatedBy(createdBy);
+        return deliveryInfoRepository.getAllByCreatedBy(createdBy, pageable);
     }
 
     public List<DeliveryInfo> search(String keyword) {

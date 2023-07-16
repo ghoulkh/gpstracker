@@ -453,8 +453,19 @@
   <field name="_version_" type="plong" indexed="false" stored="false"/>
 
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
-  <field name="role" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
-  <field name="username" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="createdAt" type="plong" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="lastUpdatedAt" type="plong" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="fromAddress" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="toAddress" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="driverUsername" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="fullNameReceiver" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="createdBy" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="phoneNumberReceiver" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="emailReceiver" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="searchData" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="status" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="senderFullName" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="senderEmail" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>

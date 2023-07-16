@@ -6,7 +6,6 @@ import com.bka.gpstracker.model.response.Response;
 import com.bka.gpstracker.model.response.UserResponse;
 import com.bka.gpstracker.service.TripAdminService;
 import com.bka.gpstracker.solr.entity.Trip;
-import com.bka.gpstracker.solr.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;

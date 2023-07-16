@@ -23,8 +23,9 @@ public class DeliveryHandle {
     @Autowired
     private EmailService emailService;
 
-    @Async
+
     @EventListener
+    @Async
     public void handleNewDelivery(NewDeliveryEvent newDeliveryEvent) {
         DeliveryInfo deliveryInfo = (DeliveryInfo) newDeliveryEvent.getSource();
         socketSender.sendDeliveryToDriver(deliveryInfo, SocketMessageContainer.Type.NEW_DELIVERY);
@@ -33,24 +34,25 @@ public class DeliveryHandle {
         log.info("Send new delivery to driver done!");
     }
 
-    @Async
+
     @EventListener
+    @Async
     public void handleUpdateDelivery(UpdateDeliveryEvent event) {
         DeliveryInfo deliveryInfo = event.getDeliveryInfoNew();
         socketSender.sendDeliveryToDriver(deliveryInfo, SocketMessageContainer.Type.UPDATE_DELIVERY);
         log.info("Send update delivery event to driver done!");
     }
 
-    @Async
     @EventListener
+    @Async
     public void handleInProgressDelivery(InProgressDeliveryEvent event) {
         DeliveryInfo deliveryInfo = (DeliveryInfo) event.getSource();
         socketSender.sendDeliveryToAdmin(deliveryInfo, SocketMessageContainer.Type.DELIVERY_IN_PROGRESS);
         log.info("Send event delivery in progress to admin done!");
     }
 
-    @Async
     @EventListener
+    @Async
     public void handleCompletedDelivery(CompletedDeliveryEvent event) {
         DeliveryInfo deliveryInfo = (DeliveryInfo) event.getSource();
         socketSender.sendDeliveryToAdmin(deliveryInfo, SocketMessageContainer.Type.DELIVERY_COMPLETED);

@@ -41,7 +41,6 @@ public class EmailService {
         }
     }
 
-    @Async
     public void sendMailNewDelivery(String deliveryId, String email) {
         sendSimpleMail(deliveryId, email);
     }

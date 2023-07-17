@@ -12,10 +12,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -129,8 +126,15 @@ public class FTPService {
             String imagesDirPath = imagesDirectory + "/" + imagesDir;
             File file1 = new File(imagesDirPath);
             File[] files1 = file1.listFiles();
+            SortedMap<Long, String> stringSortedMap = new TreeMap<Long, String>(Collections.reverseOrder());
             for (int x = 0; x < files1.length; x ++) {
-                result.add(imagesDir + "/" + files1[x].getName());
+                stringSortedMap.put(Long.valueOf(files1[x].getName()
+                        .replace("_", "")
+                        .replace(".txt", "")), files1[x].getName());
+            }
+
+            for (SortedMap.Entry<Long, String> entry : stringSortedMap.entrySet()) {
+                result.add(imagesDir + "/" + entry.getValue());
             }
         }
         return result;

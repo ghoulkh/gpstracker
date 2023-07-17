@@ -61,7 +61,7 @@ public class SocketSender {
     }
 
     public void sendDeliveryToDriver(DeliveryInfo deliveryInfo, SocketMessageContainer.Type type) {
-        simpMessagingTemplate.convertAndSend(DRIVER_PREFIX, new SocketMessageContainer(type, deliveryInfo));
+        simpMessagingTemplate.convertAndSend(DRIVER_PREFIX + deliveryInfo.getDriverUsername(), new SocketMessageContainer(type, deliveryInfo));
     }
 
     public void sendDeliveryToAdmin(DeliveryInfo deliveryInfo, SocketMessageContainer.Type type) {

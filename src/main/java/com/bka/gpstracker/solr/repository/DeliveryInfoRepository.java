@@ -23,6 +23,6 @@ public interface DeliveryInfoRepository extends SolrCrudRepository<DeliveryInfo,
     @Query("driverUsername:?0")
     List<DeliveryInfo> getAllByDriverUsername(String driverUsername);
 
-    @Query("id:?0 AND emailReceiver:?1")
-    Optional<DeliveryInfo> findByIdAndAndEmailReceiver(String deliveryId, String emailReceiver);
+    @Query("id:?0 AND (emailReceiver:?1 OR phoneNumberReceiver:?1 OR senderEmail:?1)")
+    Optional<DeliveryInfo> findByIdAndAndEmailReceiver(String deliveryId, String emailOrPhone);
 }

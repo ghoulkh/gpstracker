@@ -19,6 +19,6 @@ public class DeliveryController {
     @GetMapping("/delivery/{deliveryId}/email-receiver/{emailReceiver}")
     public ResponseEntity<DeliveryInfo> getByDeliveryIdAndEmailReceiver(@PathVariable String deliveryId,
                                                                         @PathVariable String emailReceiver) {
-        return ResponseEntity.ok(deliveryService.getByDeliveryIdAndEmailReceiver(deliveryId, emailReceiver));
+        return ResponseEntity.ok(deliveryService.getByDeliveryIdAndEmailOrPhone(deliveryId, emailReceiver));
     }
 }

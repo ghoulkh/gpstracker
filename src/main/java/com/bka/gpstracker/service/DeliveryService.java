@@ -13,8 +13,8 @@ public class DeliveryService {
     @Autowired
     public DeliveryInfoRepository deliveryInfoRepository;
 
-    public DeliveryInfo getByDeliveryIdAndEmailReceiver(String deliveryId, String emailReceiver) {
-        return deliveryInfoRepository.findByIdAndAndEmailReceiver(deliveryId, emailReceiver).orElseThrow(() ->
+    public DeliveryInfo getByDeliveryIdAndEmailOrPhone(String deliveryId, String emailOrPhone) {
+        return deliveryInfoRepository.findByIdAndAndEmailReceiver(deliveryId, emailOrPhone).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND));
     }
 }

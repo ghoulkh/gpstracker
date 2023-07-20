@@ -732,7 +732,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"fromAddress\":\"Yên hoà cầu giấy\",\n    \"toAddress\": \"Long biên\",\n    \"driverUsername\":\"phiduong\",\n    \"fullNameReceiver\":\"Nguyễn uyển nhi\",\n    \"phoneNumberReceiver\":\"082666017\",\n    \"emailReceiver\":\"1203ddp@gmail.com\",\n    \"senderEmail\":\"1203ddp@gmail.com\",\n    \"senderFullName\":\"DD\"\n}",
+							"raw": "{\n    \"fromAddress\":\"Yên hoà cầu giấy\",\n    \"toAddress\": \"Long biên\",\n    \"driverUsername\":\"phiduong\",\n    \"fullNameReceiver\":\"Nguyễn uyển nhi\",\n    \"phoneNumberReceiver\":\"082666017\",\n    \"emailReceiver\":\"1203ddp@gmail.com\",\n    \"senderEmail\":\"1203ddp@gmail.com\",\n    \"senderFullName\":\"DD\",\n    \"fromLat\":\"22.22222\", \n    \"fromLon\":\"22.22222\",\n    \"toLat\":\"22.22222\",\n    \"toLon\":\"22.22222\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -972,6 +972,27 @@
 								"607f3db0-ef29-4f91-a803-c229f7f115d2",
 								"email-receiver",
 								"1203ddp@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy vị trí theo username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/driver/admin/position-log",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"admin",
+								"position-log"
 							]
 						}
 					},

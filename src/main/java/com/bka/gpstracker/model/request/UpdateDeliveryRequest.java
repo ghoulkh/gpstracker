@@ -5,7 +5,6 @@ import com.bka.gpstracker.util.Utils;
 import lombok.Data;
 
 
-
 @Data
 public class UpdateDeliveryRequest {
     private String fromAddress;
@@ -16,6 +15,10 @@ public class UpdateDeliveryRequest {
     private String emailReceiver;
     private String senderFullName;
     private String senderEmail;
+    private String fromLat;
+    private String fromLon;
+    private String toLat;
+    private String toLon;
 
     public void updateDelivery(DeliveryInfo deliveryInfo) {
         Utils.copyPropertiesNotNull(this, deliveryInfo);

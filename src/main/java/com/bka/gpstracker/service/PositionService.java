@@ -48,6 +48,12 @@ public class PositionService {
                 .map(PositionResponse::from).collect(Collectors.toList());
     }
 
+    public List<PositionResponse> getFromSolrByQuery(String query) {
+        Pageable paging = PageRequest.of(0, 100000, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return positionLogSolrRepository.getByQuery(query, paging).stream()
+                .map(PositionResponse::from).collect(Collectors.toList());
+    }
+
     private String buildRangeTimeQuery(String rfid, Long startTime, Long endTime) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("rfid:").append(rfid).append(" AND ");

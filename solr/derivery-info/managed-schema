@@ -466,6 +466,11 @@
   <field name="status" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="senderFullName" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
   <field name="senderEmail" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="statusHistories" type="text_general" multiValued="false" indexed="false" required="false" stored="true"/>
+  <field name="fromLat" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="fromLon" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="toLat" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+  <field name="toLon" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
 
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>

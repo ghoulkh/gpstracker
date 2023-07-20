@@ -6,6 +6,7 @@ import com.bka.gpstracker.event.UpdateDeliveryEvent;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.request.NewDeliveryRequest;
 import com.bka.gpstracker.model.request.UpdateDeliveryRequest;
+import com.bka.gpstracker.model.response.DeliveryInfoResponse;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.solr.repository.DeliveryInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DeliveryAdminService {

@@ -3,6 +3,7 @@ package com.bka.gpstracker.controller;
 import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.model.request.NewDeliveryRequest;
 import com.bka.gpstracker.model.request.UpdateDeliveryRequest;
+import com.bka.gpstracker.model.response.DeliveryInfoResponse;
 import com.bka.gpstracker.service.DeliveryAdminService;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.util.SecurityUtil;
@@ -31,8 +32,8 @@ public class DeliveryAdminController {
 
     @GetMapping("/deliveries")
     public ResponseEntity<List<DeliveryInfo>> getDeliveries(@RequestParam(name = "created_by", required = false) String createdBy,
-                                                            @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
-                                                            @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
+                                                                    @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
+                                                                    @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
         return ResponseEntity.ok(deliveryAdminService.getDeliveries(createdBy, pageIndex, pageSize));
     }
 

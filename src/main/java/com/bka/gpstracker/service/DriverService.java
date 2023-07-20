@@ -8,12 +8,17 @@ import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.event.CompletedTripEvent;
 import com.bka.gpstracker.event.DriverAcceptTripEvent;
 import com.bka.gpstracker.exception.TrackerAppException;
+import com.bka.gpstracker.model.response.PositionResponse;
+import com.bka.gpstracker.solr.entity.Position;
 import com.bka.gpstracker.solr.entity.Trip;
 import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.solr.repository.TripRepository;
 import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.token.TokenService;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +51,18 @@ public class DriverService {
             return false;
         else
             return true;
+    }
+
+    public List<PositionResponse> getByUsername(String username) {
+        List<CarInfo> carInfos = carInfoService.getByUsername(username);
+        StringBuilder queryPositionBuilder = new StringBuilder();
+        queryPositionBuilder.append("rfid:(");
+        for (CarInfo carInfo : carInfos) {
+            queryPositionBuilder.append(carInfo.getRfid())
+                    .append(" ");
+        }
+        queryPositionBuilder.append(")");
+        return positionService.getFromSolrByQuery(queryPositionBuilder.toString());
     }
 
     public Trip acceptTrip(String tripId) {

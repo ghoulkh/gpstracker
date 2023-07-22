@@ -8,7 +8,6 @@ import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.StatusHistory;
 import com.bka.gpstracker.model.request.NewDeliveryRequest;
 import com.bka.gpstracker.model.request.UpdateDeliveryRequest;
-import com.bka.gpstracker.model.response.DeliveryInfoResponse;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.solr.repository.DeliveryInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DeliveryAdminService {
@@ -78,12 +76,9 @@ public class DeliveryAdminService {
         deliveryInfo.setDeliveryStatus(statusToAdd);
     }
 
-    public List<DeliveryInfo> getDeliveries(String createdBy, int pageIndex, int pageSize) {
+    public List<DeliveryInfo> getDeliveries(String createdBy, String driver, int pageIndex, int pageSize) {
         Pageable pageable = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
-        if (createdBy == null) {
-            createdBy = "*";
-        }
-        return deliveryInfoRepository.getAllByCreatedBy(createdBy, pageable);
+        return deliveryInfoRepository.getAllByCreatedByOrDriverUsername(createdBy, driver, pageable);
     }
 
     public List<DeliveryInfo> search(String keyword) {

@@ -31,10 +31,11 @@ public class DeliveryAdminController {
     }
 
     @GetMapping("/deliveries")
-    public ResponseEntity<List<DeliveryInfo>> getDeliveries(@RequestParam(name = "created_by", required = false) String createdBy,
-                                                                    @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
-                                                                    @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
-        return ResponseEntity.ok(deliveryAdminService.getDeliveries(createdBy, pageIndex, pageSize));
+    public ResponseEntity<List<DeliveryInfo>> getDeliveries(@RequestParam(name = "created_by", required = false, defaultValue = "*") String createdBy,
+                                                            @RequestParam(name = "driver", required = false, defaultValue = "*") String driver,
+                                                            @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
+                                                            @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
+        return ResponseEntity.ok(deliveryAdminService.getDeliveries(createdBy, driver, pageIndex, pageSize));
     }
 
     @GetMapping("/deliveries/canceled")

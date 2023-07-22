@@ -13,6 +13,7 @@ public class SocketMessageContainer {
         WARNING_MESSAGE,
         NEW_DELIVERY,
         UPDATE_DELIVERY,
+        DRIVER_CANCEL_DELIVERY,
         DELIVERY_IN_PROGRESS,
         DELIVERY_CANCEL,
         DELIVERY_COMPLETED;

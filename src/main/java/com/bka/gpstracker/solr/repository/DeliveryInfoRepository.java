@@ -17,6 +17,9 @@ public interface DeliveryInfoRepository extends SolrCrudRepository<DeliveryInfo,
     @Query("createdBy:?0")
     List<DeliveryInfo> getAllByCreatedBy(String createdBy, Pageable pageable);
 
+    @Query("status:CANCELED")
+    List<DeliveryInfo> getAllByStatusCanceled(Pageable pageable);
+
     @Query("?0")
     List<DeliveryInfo> query(String query);
 

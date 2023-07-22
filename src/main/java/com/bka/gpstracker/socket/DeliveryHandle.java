@@ -1,9 +1,6 @@
 package com.bka.gpstracker.socket;
 
-import com.bka.gpstracker.event.CompletedDeliveryEvent;
-import com.bka.gpstracker.event.InProgressDeliveryEvent;
-import com.bka.gpstracker.event.NewDeliveryEvent;
-import com.bka.gpstracker.event.UpdateDeliveryEvent;
+import com.bka.gpstracker.event.*;
 import com.bka.gpstracker.service.EmailService;
 import com.bka.gpstracker.socket.message.SocketMessageContainer;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
@@ -29,6 +26,7 @@ public class DeliveryHandle {
     public void handleNewDelivery(NewDeliveryEvent newDeliveryEvent) {
         DeliveryInfo deliveryInfo = (DeliveryInfo) newDeliveryEvent.getSource();
         socketSender.sendDeliveryToDriver(deliveryInfo, SocketMessageContainer.Type.NEW_DELIVERY);
+        socketSender.sendDeliveryToAdmin(deliveryInfo, SocketMessageContainer.Type.NEW_DELIVERY);
         emailService.sendMailNewDelivery(deliveryInfo.getId(), deliveryInfo.getEmailReceiver());
         emailService.sendMailNewDelivery(deliveryInfo.getId(), deliveryInfo.getSenderEmail());
         log.info("Send new delivery to driver done!");
@@ -40,7 +38,16 @@ public class DeliveryHandle {
     public void handleUpdateDelivery(UpdateDeliveryEvent event) {
         DeliveryInfo deliveryInfo = event.getDeliveryInfoNew();
         socketSender.sendDeliveryToDriver(deliveryInfo, SocketMessageContainer.Type.UPDATE_DELIVERY);
+        socketSender.sendDeliveryToAdmin(deliveryInfo, SocketMessageContainer.Type.UPDATE_DELIVERY);
         log.info("Send update delivery event to driver done!");
+    }
+
+    @EventListener
+    @Async
+    public void handleCancelDelivery(DriverCancelDeliveryEvent event) {
+        DeliveryInfo deliveryInfo = (DeliveryInfo) event.getSource();
+        socketSender.sendDeliveryToAdmin(deliveryInfo, SocketMessageContainer.Type.DRIVER_CANCEL_DELIVERY);
+        log.info("Send driver cancel delivery event to driver done!");
     }
 
     @EventListener

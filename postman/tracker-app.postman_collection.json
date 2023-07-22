@@ -839,6 +839,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Lấy các chuyến hàng bị tài xế huỷ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY5MjA3OTI4MywiaWF0IjoxNjg5NDg3MjgzfQ.yPG3CmqfuBU0vGrm-cPKwC-0NlzC-fFybZclOOt23ljcO3vyHwcSbHuTgmqOHaaspicEQ5uxukucjS3ZL3mAqA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/deliveries/canceled?page_index=1&page_size=10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deliveries",
+								"canceled"
+							],
+							"query": [
+								{
+									"key": "page_index",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "10"
+								},
+								{
+									"key": "created_by",
+									"value": "admin",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -945,6 +989,36 @@
 								"driver",
 								"completed-delivery",
 								"2ef7f02f-7290-45eb-816f-ee69d1732d9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tài xế huỷ đơn hàng",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaGlkdW9uZyIsImV4cCI6MTY5MjA4MTEwMCwiaWF0IjoxNjg5NDg5MTAwfQ.IqGyrRCYMPJlLj-kAJXxp50hg2P0UFsUSvZOmkqpQyvlVs6k7s8cl1diy9tJsvswv1h-2I733i7fnOVwkl8dzA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/driver/cancel-delivery/d095886d-9cb6-419c-aff4-e73f062a0523",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"driver",
+								"cancel-delivery",
+								"d095886d-9cb6-419c-aff4-e73f062a0523"
 							]
 						}
 					},

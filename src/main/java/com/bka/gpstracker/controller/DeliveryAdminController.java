@@ -37,6 +37,12 @@ public class DeliveryAdminController {
         return ResponseEntity.ok(deliveryAdminService.getDeliveries(createdBy, pageIndex, pageSize));
     }
 
+    @GetMapping("/deliveries/canceled")
+    public ResponseEntity<List<DeliveryInfo>> getDeliveriesCanceled(@RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
+                                                                    @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
+        return ResponseEntity.ok(deliveryAdminService.getAllDeliveryCanceled(pageIndex, pageSize));
+    }
+
     @PatchMapping("/delivery/{deliveryId}")
     public ResponseEntity<DeliveryInfo> updateDelivery(@Valid @RequestBody UpdateDeliveryRequest updateDeliveryRequest,
                                                        @PathVariable String deliveryId) {

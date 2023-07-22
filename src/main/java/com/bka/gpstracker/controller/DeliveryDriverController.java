@@ -33,7 +33,13 @@ public class DeliveryDriverController {
 
 
     @PostMapping("/driver/completed-delivery/{deliveryId}")
-    public ResponseEntity<DeliveryInfo> driverCompletedDelivery(@PathVariable String deliveryId) {
+    public ResponseEntity<DeliveryInfo> driverCompleteDelivery(@PathVariable String deliveryId) {
         return ResponseEntity.ok(deliveryDriverService.driverCompletedDelivery(deliveryId));
+    }
+
+
+    @PostMapping("/driver/cancel-delivery/{deliveryId}")
+    public ResponseEntity<DeliveryInfo> driverCancelDelivery(@PathVariable String deliveryId) {
+        return ResponseEntity.ok(deliveryDriverService.driverCancelDelivery(deliveryId));
     }
 }

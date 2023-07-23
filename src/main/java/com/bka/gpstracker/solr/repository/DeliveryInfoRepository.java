@@ -14,7 +14,7 @@ public interface DeliveryInfoRepository extends SolrCrudRepository<DeliveryInfo,
     @Query("id:?0")
     Optional<DeliveryInfo> findById(String s);
 
-    @Query("createdBy:?0 OR driverUsername:?1")
+    @Query("createdBy:?0 AND driverUsername:?1")
     List<DeliveryInfo> getAllByCreatedByOrDriverUsername(String createdBy, String driverUsername, Pageable pageable);
 
     @Query("status:CANCELED")

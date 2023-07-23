@@ -12,6 +12,9 @@ import com.bka.gpstracker.solr.repository.DeliveryInfoRepository;
 import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -25,14 +28,15 @@ public class DeliveryDriverService {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    public List<DeliveryInfo> getByDriverUsername(String driverUsername) {
-        return deliveryInfoRepository.getAllByDriverUsername(driverUsername);
+    public List<DeliveryInfo> getByDriverUsernameAndStatus(String driverUsername, String status, int pageIndex, int pageSize) {
+        Pageable pageable = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return deliveryInfoRepository.getAllByDriverUsernameAndStatus(driverUsername, status, pageable);
     }
 
     public DeliveryInfo driverStartDelivery(String id) {
         DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(id).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND));
-        if (!deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.NEW) || !deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.NEW_DRIVER))
+        if (!deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.NEW) && !deliveryInfo.getDeliveryStatus().equals(DeliveryStatus.NEW_DRIVER))
             throw new TrackerAppException(ErrorCode.BAD_REQUEST);
 
         canChangeStatus(deliveryInfo);

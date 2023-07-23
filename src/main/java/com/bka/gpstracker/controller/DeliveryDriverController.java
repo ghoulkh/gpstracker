@@ -6,10 +6,7 @@ import com.bka.gpstracker.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,9 +18,11 @@ public class DeliveryDriverController {
 
 
     @GetMapping("/me/driver/deliveries")
-    public ResponseEntity<List<DeliveryInfo>> getDeliveries() {
+    public ResponseEntity<List<DeliveryInfo>> getDeliveries(@RequestParam(name = "page_index", required = false, defaultValue = "1") int pageIndex,
+                                                            @RequestParam(name = "page_size", required = false, defaultValue = "1") int pageSize,
+                                                            @RequestParam(name = "status", required = false, defaultValue = "*") String status) {
         String currentUsername = SecurityUtil.getCurrentUsername();
-        return ResponseEntity.ok(deliveryDriverService.getByDriverUsername(currentUsername));
+        return ResponseEntity.ok(deliveryDriverService.getByDriverUsernameAndStatus(currentUsername, status, pageIndex, pageSize));
     }
 
     @PostMapping("/driver/start-delivery/{deliveryId}")

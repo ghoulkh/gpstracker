@@ -4,6 +4,7 @@ import com.bka.gpstracker.entity.CarInfo;
 import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.event.NewCheckInEvent;
 import com.bka.gpstracker.repository.CarInfoRepository;
+import com.bka.gpstracker.socket.SocketSender;
 import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.solr.repository.UserInfoRepository;
 import lombok.extern.java.Log;
@@ -21,6 +22,8 @@ public class CheckInHandle {
     private CarInfoRepository carInfoRepository;
     @Autowired
     private UserInfoRepository userInfoRepository;
+    @Autowired
+    private SocketSender socketSender;
 
     @EventListener
     @Async
@@ -33,6 +36,7 @@ public class CheckInHandle {
         UserInfo userInfo = userInfoRepository.getByUsername(carInfo.getUsername());
         userInfo.setLastCheckInAt(checkIn.getDate());
         userInfoRepository.save(userInfo);
-        log.info("checkIn with car {}", carInfo);
+        socketSender.sendCheckInToUser(checkIn);
+        log.info("checkIn and send check in to user with car {}", carInfo);
     }
 }

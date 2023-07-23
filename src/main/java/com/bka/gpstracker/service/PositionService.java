@@ -72,9 +72,9 @@ public class PositionService {
     }
 
     public List<PositionLog> getByRfid(String rfid, int pageIndex, int pageSize) {
-        String username = SecurityUtil.getCurrentUsername();
-        if (!carInfoService.isAuthorCar(username, rfid))
-            throw new TrackerAppException(ErrorCode.ACCESS_DENIED);
+//        String username = SecurityUtil.getCurrentUsername();
+//        if (!carInfoService.isAuthorCar(username, rfid))
+//            throw new TrackerAppException(ErrorCode.ACCESS_DENIED);
         Pageable paging = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "id"));
         return positionLogRepository.findAllByRfid(rfid, paging);
     }

@@ -3,6 +3,7 @@ package com.bka.gpstracker.model.request;
 import com.bka.gpstracker.common.DeliveryStatus;
 import com.bka.gpstracker.model.StatusHistory;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
+import com.bka.gpstracker.util.DeliveryIdGenerator;
 import com.bka.gpstracker.util.Utils;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -41,7 +42,7 @@ public class NewDeliveryRequest {
 
     public DeliveryInfo toDeliveryInfo(String createdBy) {
         DeliveryInfo deliveryInfo = new DeliveryInfo();
-        deliveryInfo.setId(UUID.randomUUID().toString());
+        deliveryInfo.setId(DeliveryIdGenerator.geneId());
         Long currentTime = System.currentTimeMillis();
         deliveryInfo.setCreatedAt(currentTime);
         deliveryInfo.setLastUpdatedAt(currentTime);

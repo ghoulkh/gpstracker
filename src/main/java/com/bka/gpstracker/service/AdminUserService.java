@@ -32,6 +32,7 @@ public class AdminUserService {
         }
         CarInfo carInfoToSet = carInfoService.getByRfid(rfid);
         carInfoToSet.setUsername(userToSet.getUsername());
+        carInfoToSet.setDriver(userToSet.getFullName());
         setRoleDriver(username);
         return carInfoService.save(carInfoToSet);
     }

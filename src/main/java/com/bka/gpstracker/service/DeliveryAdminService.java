@@ -1,6 +1,7 @@
 package com.bka.gpstracker.service;
 
 import com.bka.gpstracker.common.DeliveryStatus;
+import com.bka.gpstracker.entity.CarInfo;
 import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.event.NewDeliveryEvent;
 import com.bka.gpstracker.event.UpdateDeliveryEvent;
@@ -29,10 +30,24 @@ public class DeliveryAdminService {
     private DeliveryInfoRepository deliveryInfoRepository;
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
+    @Autowired
+    private CarInfoService carInfoService;
+    @Autowired
+    private AddressService addressService;
 
     public DeliveryInfo registrationDelivery(NewDeliveryRequest request, String currentUsername) {
         userService.findByUsername(request.getDriverUsername()).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.DRIVER_USERNAME_INVALID));
+
+        List<CarInfo> carInfos = carInfoService.getAllByUsername(request.getDriverUsername());
+        if (carInfos.isEmpty()) throw new TrackerAppException(ErrorCode.DRIVER_IS_INACTIVE);
+        CarInfo carInfo = carInfos.get(0);
+        if (!carInfo.getActiveAreas().isEmpty()) {
+            String districtInAddress = addressService.getDistrictInAddress(request.getToAddress());
+            if (!carInfo.getActiveAreas().contains(districtInAddress))
+                throw new TrackerAppException(ErrorCode.INVALID_DRIVER_AREA);
+        }
+
         DeliveryInfo result = deliveryInfoRepository.save(request.toDeliveryInfo(currentUsername));
         applicationEventPublisher.publishEvent(new NewDeliveryEvent(result));
         return result;

@@ -23,6 +23,6 @@ public class AdminUserController {
     @Secured(AuthoritiesConstants.ROLE_ADMIN)
     @PostMapping("/car-info/author")
     public ResponseEntity<CarInfo> setCarInfoAuthor(@RequestBody @Valid AuthorCarInfoRequest request) {
-        return ResponseEntity.ok(adminUserService.setCarAuthor(request.getUsername(), request.getRfid()));
+        return ResponseEntity.ok(adminUserService.setCarAuthor(request));
     }
 }

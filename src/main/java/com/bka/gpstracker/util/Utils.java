@@ -8,6 +8,7 @@ import com.bka.gpstracker.solr.entity.Trip;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.beanutils.BeanUtilsBean;
 
+import java.text.Normalizer;
 import java.util.Date;
 
 @Log4j2
@@ -68,6 +69,15 @@ public class Utils {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public static String toEn(String input) {
+        if (input == null) return null;
+        return Normalizer
+                .normalize(input, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                .replace("Đ", "D")
+                .replace("đ", "d");
     }
 
 

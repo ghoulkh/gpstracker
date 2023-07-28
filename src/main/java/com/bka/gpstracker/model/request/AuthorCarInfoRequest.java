@@ -3,6 +3,7 @@ package com.bka.gpstracker.model.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class AuthorCarInfoRequest {
@@ -10,4 +11,5 @@ public class AuthorCarInfoRequest {
     private String username;
     @NotBlank(message = "rfid is required!")
     private String rfid;
+    private List<String> activeAreas;
 }

@@ -37,7 +37,12 @@ public enum ErrorCode {
     NOT_DRIVER("APP-53", "Không phải là một tài xế", HttpStatus.BAD_REQUEST),
     DRIVER_INACTIVE("APP-54", "Tài xế đang không hoat dong. Vui lòng chọn tài xế khác!", HttpStatus.BAD_REQUEST),
     DELIVERY_NOT_FOUND("APP-55", "delivery not found!", HttpStatus.NOT_FOUND),
-    DRIVER_USERNAME_INVALID("APP-56", "driver username invalid!", HttpStatus.BAD_REQUEST);
+    DRIVER_USERNAME_INVALID("APP-56", "driver username invalid!", HttpStatus.BAD_REQUEST),
+    ACTIVE_AREAS_IS_REQUIRE("APP-57", "active areas is require!", HttpStatus.BAD_REQUEST),
+    INVALID_ACTIVE_AREAS("APP-58", "invalid active areas!", HttpStatus.BAD_REQUEST),
+    ADDRESS_INVALID("APP-59", "address invalid!", HttpStatus.BAD_REQUEST),
+    DRIVER_IS_INACTIVE("APP-60", "tài xế chưa đăng ký thông tin xe với admin", HttpStatus.BAD_REQUEST),
+    INVALID_DRIVER_AREA("APP-61", "Địa chỉ giao hàng không nằm trong khu vực hoạt động của tài xế!", HttpStatus.BAD_REQUEST);
 
 
 

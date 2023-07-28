@@ -44,6 +44,8 @@ public class AdminUserService {
         carInfoToSet.setDriver(userToSet.getFullName());
         setRoleDriver(request.getUsername());
         carInfoToSet.setActiveAreas(request.getActiveAreas());
+        carInfoToSet.setDrivingLicense(request.getDrivingLicense());
+        carInfoToSet.setLicensePlate(request.getLicensePlate());
         return carInfoService.save(carInfoToSet);
     }
 

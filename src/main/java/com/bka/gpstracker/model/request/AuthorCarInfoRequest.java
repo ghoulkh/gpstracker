@@ -12,4 +12,8 @@ public class AuthorCarInfoRequest {
     @NotBlank(message = "rfid is required!")
     private String rfid;
     private List<String> activeAreas;
+    @NotBlank(message = "drivingLicense is required!")
+    private String drivingLicense;
+    @NotBlank(message = "licensePlate is required!")
+    private String licensePlate;
 }

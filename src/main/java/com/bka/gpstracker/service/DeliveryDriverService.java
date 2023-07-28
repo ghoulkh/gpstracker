@@ -30,6 +30,9 @@ public class DeliveryDriverService {
 
     public List<DeliveryInfo> getByDriverUsernameAndStatus(String driverUsername, String status, int pageIndex, int pageSize) {
         Pageable pageable = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
+        if (DeliveryStatus.IN_PROGRESS.toString().equals(status)) {
+            status = "(" + DeliveryStatus.IN_PROGRESS + " " + DeliveryStatus.NEW_DRIVER + ")";
+        }
         return deliveryInfoRepository.getAllByDriverUsernameAndStatus(driverUsername, status, pageable);
     }
 

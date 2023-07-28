@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,6 +31,7 @@ public class CarInfo {
     @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "last_check_in_at")
     private Date lastCheckInAt;
+    @Lob
     @Column(name = "active_areas")
     private String activeAreas;
 

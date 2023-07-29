@@ -30,8 +30,8 @@ public class DeliveryDriverService {
 
     public List<DeliveryInfo> getByDriverUsernameAndStatus(String driverUsername, String status, int pageIndex, int pageSize) {
         Pageable pageable = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
-        if (DeliveryStatus.IN_PROGRESS.toString().equals(status)) {
-            status = "(" + DeliveryStatus.IN_PROGRESS + " " + DeliveryStatus.NEW_DRIVER + ")";
+        if (DeliveryStatus.NEW.toString().equals(status)) {
+            status = "(" + DeliveryStatus.NEW + " " + DeliveryStatus.NEW_DRIVER + ")";
         }
         return deliveryInfoRepository.getAllByDriverUsernameAndStatus(driverUsername, status, pageable);
     }
@@ -45,6 +45,7 @@ public class DeliveryDriverService {
         canChangeStatus(deliveryInfo);
 
         addStatusHistory(deliveryInfo, DeliveryStatus.IN_PROGRESS);
+        deliveryInfo.setLastUpdatedAt(System.currentTimeMillis());
         DeliveryInfo result = deliveryInfoRepository.save(deliveryInfo);
         applicationEventPublisher.publishEvent(new InProgressDeliveryEvent(result));
         return result;
@@ -78,6 +79,7 @@ public class DeliveryDriverService {
         canChangeStatus(deliveryInfo);
 
         addStatusHistory(deliveryInfo, DeliveryStatus.COMPLETED);
+        deliveryInfo.setLastUpdatedAt(System.currentTimeMillis());
         DeliveryInfo result = deliveryInfoRepository.save(deliveryInfo);
         applicationEventPublisher.publishEvent(new CompletedDeliveryEvent(result));
         return result;

@@ -22,6 +22,7 @@ public class UpdateDeliveryRequest {
 
     public void updateDelivery(DeliveryInfo deliveryInfo) {
         Utils.copyPropertiesNotNull(this, deliveryInfo);
+        deliveryInfo.setLastUpdatedAt(System.currentTimeMillis());
         deliveryInfo.setSearchData(Utils.geneDataSearchDelivery(deliveryInfo));
     }
 }

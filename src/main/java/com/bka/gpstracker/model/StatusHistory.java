@@ -15,4 +15,6 @@ public class StatusHistory {
     @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     private Long createdAt;
 
+    private String driverUserName;
+
 }

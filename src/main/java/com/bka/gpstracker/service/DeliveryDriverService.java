@@ -64,6 +64,7 @@ public class DeliveryDriverService {
         StatusHistory statusHistoryToAdd = new StatusHistory();
         statusHistoryToAdd.setCreatedAt(System.currentTimeMillis());
         statusHistoryToAdd.setDeliveryStatus(statusToAdd);
+        statusHistoryToAdd.setDriverUserName(deliveryInfo.getDriverUsername());
         statusHistories.add(statusHistoryToAdd);
 
         deliveryInfo.setStatusHistories(statusHistories);

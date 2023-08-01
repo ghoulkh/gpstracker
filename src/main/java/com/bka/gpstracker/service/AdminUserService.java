@@ -39,7 +39,9 @@ public class AdminUserService {
             throw new TrackerAppException(ErrorCode.ADD_CAR_AUTHOR_FAILED);
         }
 
-        CarInfo carInfoToSet = carInfoService.getByRfid(request.getRfid());
+//        CarInfo carInfoToSet = carInfoService.getByRfid(request.getRfid());
+        CarInfo carInfoToSet = new CarInfo();
+        carInfoToSet.setRfid(request.getRfid());
         carInfoToSet.setUsername(userToSet.getUsername());
         carInfoToSet.setDriver(userToSet.getFullName());
         setRoleDriver(request.getUsername());

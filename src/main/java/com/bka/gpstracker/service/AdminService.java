@@ -28,7 +28,7 @@ public class AdminService {
 
     public List<UserResponse> getUserAndPaging(String username, int pageIndex, int pageSize) {
         if (!StringUtils.isEmpty(username)) {
-            username += "*" + username + "*";
+            username = "*" + username + "*";
         }
         Pageable paging = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
         Page<UserInfo> userPage = userInfoRepository.getAllByUsername(username, paging);

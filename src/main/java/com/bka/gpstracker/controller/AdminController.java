@@ -27,8 +27,8 @@ public class AdminController {
     }
 
     @Secured(AuthoritiesConstants.ROLE_ADMIN)
-    @GetMapping("/user-info}")
-    public ResponseEntity<List<UserResponse>> getAllUser(@RequestParam(name = "user-name", defaultValue = "*", required = false) String username,
+    @GetMapping("/user-info")
+    public ResponseEntity<List<UserResponse>> getAllUser(@RequestParam(name = "user_name", defaultValue = "*", required = false) String username,
                                                          @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
                                                          @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
         return ResponseEntity.ok(adminService.getUserAndPaging(username, pageIndex, pageSize));

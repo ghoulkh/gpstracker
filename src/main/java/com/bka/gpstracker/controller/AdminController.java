@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/admin")
@@ -27,4 +29,10 @@ public class AdminController {
         return ResponseEntity.ok(adminService.addAuthorityWithUsername(request.getUsername(), Authority.Role.valueOf(request.getRole())));
     }
 
+    @Secured(AuthoritiesConstants.ROLE_ADMIN)
+    @PostMapping("/permission")
+    public ResponseEntity<List<UserResponse>> getAllUser(@RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
+                                                        @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
+        return ResponseEntity.ok(adminService.getUserAndPaging(pageIndex, pageSize));
+    }
 }

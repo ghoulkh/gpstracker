@@ -9,6 +9,8 @@ import com.bka.gpstracker.error.ErrorCode;
 import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.solr.repository.AuthorityRepository;
 import com.bka.gpstracker.util.SecurityUtil;
+import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 public class AdminUserService {
     @Autowired
     private UserService userService;
@@ -39,7 +42,7 @@ public class AdminUserService {
             throw new TrackerAppException(ErrorCode.ADD_CAR_AUTHOR_FAILED);
         }
 
-//        CarInfo carInfoToSet = carInfoService.getByRfid(request.getRfid());
+        handleUpdateRfid(request.getRfid());
         CarInfo carInfoToSet = new CarInfo();
         carInfoToSet.setRfid(request.getRfid());
         carInfoToSet.setUsername(userToSet.getUsername());
@@ -49,6 +52,18 @@ public class AdminUserService {
         carInfoToSet.setDrivingLicense(request.getDrivingLicense());
         carInfoToSet.setLicensePlate(request.getLicensePlate());
         return carInfoService.save(carInfoToSet);
+    }
+
+    private void handleUpdateRfid(String rfid) {
+        try {
+            CarInfo carInfo = carInfoService.getByRfid(rfid);
+            if (!StringUtils.isEmpty(carInfo.getUsername())) {
+                Authority authority = authorityRepository.getByUsernameAndRole(carInfo.getUsername(), "ROLE_DRIVER");
+                authorityRepository.delete(authority);
+            }
+        } catch (Exception e) {
+            log.info("Not found carInfo");
+        }
     }
 
     private void validateAddress(AuthorCarInfoRequest request) {

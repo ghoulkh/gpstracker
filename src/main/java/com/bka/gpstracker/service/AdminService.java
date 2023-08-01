@@ -1,6 +1,5 @@
 package com.bka.gpstracker.service;
 
-import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.solr.entity.Authority;
 import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.error.ErrorCode;
@@ -9,6 +8,7 @@ import com.bka.gpstracker.model.response.UserResponse;
 import com.bka.gpstracker.solr.repository.AuthorityRepository;
 import com.bka.gpstracker.solr.repository.UserInfoRepository;
 import com.bka.gpstracker.util.SecurityUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,9 +26,12 @@ public class AdminService {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
-    public List<UserResponse> getUserAndPaging(int pageIndex, int pageSize) {
+    public List<UserResponse> getUserAndPaging(String username, int pageIndex, int pageSize) {
+        if (!StringUtils.isEmpty(username)) {
+            username += "*" + username + "*";
+        }
         Pageable paging = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
-        Page<UserInfo> userPage = userInfoRepository.findAll(paging);
+        Page<UserInfo> userPage = userInfoRepository.getAllByUsername(username, paging);
         return userPage.getContent().stream()
                 .map(userInfo -> UserResponse.from(userInfo, authorityRepository.getAllByUsername(userInfo.getUsername())))
                 .collect(Collectors.toList());

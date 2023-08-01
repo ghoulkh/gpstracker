@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,9 +27,10 @@ public class AdminController {
     }
 
     @Secured(AuthoritiesConstants.ROLE_ADMIN)
-    @PostMapping("/permission")
-    public ResponseEntity<List<UserResponse>> getAllUser(@RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
-                                                        @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
-        return ResponseEntity.ok(adminService.getUserAndPaging(pageIndex, pageSize));
+    @GetMapping("/user-info}")
+    public ResponseEntity<List<UserResponse>> getAllUser(@RequestParam(name = "user-name", defaultValue = "*", required = false) String username,
+                                                         @RequestParam(name = "page_index", defaultValue = "1", required = false) int pageIndex,
+                                                         @RequestParam(name = "page_size", defaultValue = "10", required = false) int pageSize) {
+        return ResponseEntity.ok(adminService.getUserAndPaging(username, pageIndex, pageSize));
     }
 }

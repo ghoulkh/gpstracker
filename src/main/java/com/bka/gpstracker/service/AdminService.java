@@ -25,6 +25,8 @@ public class AdminService {
     private AuthorityRepository authorityRepository;
     @Autowired
     private UserInfoRepository userInfoRepository;
+    @Autowired
+    private CarInfoService carInfoService;
 
     public List<UserResponse> getUserAndPaging(String username, int pageIndex, int pageSize) {
         if (!StringUtils.isEmpty(username)) {
@@ -33,7 +35,11 @@ public class AdminService {
         Pageable paging = PageRequest.of(pageIndex - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdDate"));
         Page<UserInfo> userPage = userInfoRepository.getAllByUsername(username, paging);
         return userPage.getContent().stream()
-                .map(userInfo -> UserResponse.from(userInfo, authorityRepository.getAllByUsername(userInfo.getUsername())))
+                .map(userInfo -> UserResponse.fromV2(
+                        userInfo,
+                        authorityRepository.getAllByUsername(userInfo.getUsername()),
+                        carInfoService.getByUsername(userInfo.getUsername())
+                        ))
                 .collect(Collectors.toList());
     }
 

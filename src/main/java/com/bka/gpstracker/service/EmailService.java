@@ -45,4 +45,33 @@ public class EmailService {
         sendSimpleMail(deliveryId, email);
     }
 
+    @Async
+    public void sendMailForgotPassword(String codeResetPass, String email, String username) {
+        try {
+
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(messageForgotPasswordBuilder(codeResetPass, username), false); // Use this or above line.
+            helper.setTo(email);
+            helper.setSubject("Forgot password!!!");
+            helper.setFrom("1203ddp@gmail.com");
+            javaMailSender.send(mimeMessage);
+            log.info("Mail Sent Successfully...");
+        }
+
+        catch (Exception e) {
+            log.error("Error while Sending Mail");
+        }
+    }
+
+
+    private String messageForgotPasswordBuilder(String codeResetPassword, String username) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Reset password\n" +
+                "Link will expire within 5 minutes\n").append("Link: ");
+        builder.append("http://gps.hust.id.vn/restpassword?code=").append(codeResetPassword);
+        builder.append("&username=").append(username);
+        return builder.toString();
+    }
+
 }

@@ -42,7 +42,9 @@ public enum ErrorCode {
     INVALID_ACTIVE_AREAS("APP-58", "invalid active areas!", HttpStatus.BAD_REQUEST),
     ADDRESS_INVALID("APP-59", "address invalid!", HttpStatus.BAD_REQUEST),
     DRIVER_IS_INACTIVE("APP-60", "tài xế chưa đăng ký thông tin xe với admin", HttpStatus.BAD_REQUEST),
-    INVALID_DRIVER_AREA("APP-61", "Địa chỉ giao hàng không nằm trong khu vực hoạt động của tài xế!", HttpStatus.BAD_REQUEST);
+    INVALID_DRIVER_AREA("APP-61", "Địa chỉ giao hàng không nằm trong khu vực hoạt động của tài xế!", HttpStatus.BAD_REQUEST),
+    CODE_INVALID("APP-31", "Code invalid!", HttpStatus.BAD_REQUEST),
+    CODE_IS_EXPIRE("APP-32", "Code is expire!", HttpStatus.BAD_REQUEST);
 
 
 

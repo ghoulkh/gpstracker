@@ -7,7 +7,6 @@ import com.bka.gpstracker.repository.CarInfoRepository;
 import com.bka.gpstracker.socket.SocketSender;
 import com.bka.gpstracker.solr.entity.UserInfo;
 import com.bka.gpstracker.solr.repository.UserInfoRepository;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;

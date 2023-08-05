@@ -209,6 +209,86 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Gửi mail quên mật khẩu bằng username",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/auth/forgot-mail/user/phikm12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"forgot-mail",
+								"user",
+								"phikm12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "đặt lại mật khẩu dựa trên thông tin được gửi trong mail",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"phikm12\",\r\n    \"code\": \"u3pX61BtWC\", \r\n    \"newPassword\":\"phikm1203\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/reset-pass",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"reset-pass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Đổi mật khẩu khi vẫn nhớ mật khẩu cũ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"phikm12\",\r\n    \"oldPassword\": \"phikm1203\",\r\n    \"newPassword\": \"admin2\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/change-password",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

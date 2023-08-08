@@ -1,6 +1,7 @@
 package com.bka.gpstracker.entity;
 
 import com.bka.gpstracker.solr.entity.Position;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class PositionLog {
     @Id
     @Column(name = "STT")
     private Long id;
+    @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "Time")
     private Date date;
     @Column(name = "rfid")

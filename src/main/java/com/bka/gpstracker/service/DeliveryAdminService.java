@@ -9,19 +9,28 @@ import com.bka.gpstracker.exception.TrackerAppException;
 import com.bka.gpstracker.model.StatusHistory;
 import com.bka.gpstracker.model.request.NewDeliveryRequest;
 import com.bka.gpstracker.model.request.UpdateDeliveryRequest;
+import com.bka.gpstracker.model.response.DeliveryInfoResponse;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.solr.repository.DeliveryInfoRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class DeliveryAdminService {
 
     @Autowired
@@ -108,5 +117,100 @@ public class DeliveryAdminService {
         queryBuilder.append(")");
 
         return deliveryInfoRepository.query(queryBuilder.toString());
+    }
+
+    public Path getByTime(Long startTime, Long endTime) {
+        List<DeliveryInfoResponse> data = deliveryInfoRepository.query(buildRangeTimeQuery(startTime, endTime)).stream()
+                .map(DeliveryInfoResponse::from).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(data)) {
+            throw new TrackerAppException(ErrorCode.DELIVERY_NOT_FOUND);
+        }
+        return createNewExcelData(data);
+    }
+
+    private String buildRangeTimeQuery(Long startTime, Long endTime) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("createdAt:[");
+        if (startTime != null) {
+            stringBuilder.append(startTime);
+        } else
+            stringBuilder.append("*");
+        stringBuilder.append(" TO ");
+        if (endTime != null)
+            stringBuilder.append(endTime);
+        else
+            stringBuilder.append("*");
+        stringBuilder.append("]");
+        return stringBuilder.toString();
+    }
+
+    private Path createNewExcelData(List<DeliveryInfoResponse> listDataImport) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String date = dateFormat.format(new Date(System.currentTimeMillis())).replace(" ", "-").replace(":","-");
+        String fileName = "Delivery-" + date + ".xlsx";
+        File tempFile = new File(fileName);
+        try (Workbook workbook = new XSSFWorkbook();
+             FileOutputStream fos = new FileOutputStream(tempFile);
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            Sheet sheet = workbook.createSheet("File data log DELIVERY");
+
+            Font customFont = workbook.createFont();
+            customFont.setBold(true);
+            customFont.setFontHeightInPoints((short) 12);
+            CellStyle cellStyle = workbook.createCellStyle();
+            cellStyle.setFont(customFont);
+
+            Row headerRow = sheet.createRow(0);
+            String[] columnNames = {
+                    "Thời gian",
+                    "Người lên đơn",
+                    "Tài xế",
+                    "Trạng thái",
+                    "Người gửi",
+                    "Địa chỉ người gửi",
+                    "Email liên hệ người gửi",
+                    "Người nhận",
+                    "Địa chỉ người nhận",
+                    "Email liên hệ người nhận",
+                    "Số điện thoại người nhận",
+            };
+            for (int i = 0; i < columnNames.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columnNames[i]);
+                cell.setCellStyle(cellStyle);
+                sheet.autoSizeColumn(i);
+            }
+            int row = 0;
+            for (DeliveryInfoResponse deliveryInfo : listDataImport) {
+                row++;
+                Row dataRow = sheet.createRow(row);
+                String[] rowData = {
+                        dateFormat.format(new Date(deliveryInfo.getCreatedAt())).replace(" ", "-"),
+                        deliveryInfo.getCreatedBy(),
+                        deliveryInfo.getDriverUsername(),
+                        String.valueOf(deliveryInfo.getDeliveryStatus()),
+                        deliveryInfo.getSenderFullName(),
+                        deliveryInfo.getFromAddress(),
+                        deliveryInfo.getSenderEmail(),
+                        deliveryInfo.getFullNameReceiver(),
+                        deliveryInfo.getToAddress(),
+                        deliveryInfo.getEmailReceiver(),
+                        deliveryInfo.getPhoneNumberReceiver(),
+                };
+                for (int j = 0; j < rowData.length; j++) {
+                    CellStyle dateCellStyle = workbook.createCellStyle();
+                    Cell cell = dataRow.createCell(j);
+                    cell.setCellValue(rowData[j]);
+                    cell.setCellStyle(dateCellStyle);
+                    sheet.autoSizeColumn(j);
+                }
+            }
+            workbook.write(outputStream);
+            outputStream.writeTo(fos);
+            return tempFile.toPath();
+        } catch (Exception e) {
+            log.info("Something went wrong with createNewExcelData: " + e.getMessage(), e);
+        }
+        return null;
     }
 }

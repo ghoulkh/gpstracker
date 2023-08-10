@@ -48,8 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/user").permitAll()
-                .antMatchers("/api/auth/*", "/api/auth/**", "/ws/*", "/ws", "/ws/**", "/api/files", "/api/image/**",
-                        "/api/test/check_in/*", "/api/delivery/*/email-receiver/*", "/api/driver/*/position-log", "/api/address/*").permitAll()
+                .antMatchers("/api/auth/*", "/api/auth/**", "/ws/*", "/ws", "/ws/**", "/api/files",
+                        "/api/image/**", "/api/test/check_in/*", "/api/delivery/*/email-receiver/*",
+                        "/api/driver/*/position-log", "/api/address/*", "/internal/**").permitAll()
                 .anyRequest().authenticated()
                 .and().apply(securityConfigurerAdapter())
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

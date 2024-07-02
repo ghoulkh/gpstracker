@@ -39,10 +39,11 @@ public class CarInfoService {
                 new TrackerAppException(ErrorCode.CAR_INFO_NOT_FOUND));
     }
 
-    public void testCheckIn(String rfid) {
+    public void testCheckIn(String rfid, boolean enabled) {
         CheckIn checkIn = new CheckIn();
         checkIn.setDate(new Date());
-        checkIn.setRfid(rfid);
+        checkIn.setCarInfo(getByRfid(rfid));
+        checkIn.setEnabled(enabled);
         checkIn.setId(checkInRepository.getMaxId() + 1L);
         checkInRepository.save(checkIn);
     }

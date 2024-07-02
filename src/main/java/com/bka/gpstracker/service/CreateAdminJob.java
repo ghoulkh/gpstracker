@@ -27,7 +27,9 @@ public class CreateAdminJob {
 
     @PostConstruct
     private void registerAdmin() {
-        if (userService.findByUsername(this.usernameAdmin).isPresent()) return;
+        if (userService.findByUsername(this.usernameAdmin).isPresent()) {
+            return;
+        }
         RegisterUserRequest request = new RegisterUserRequest();
         request.setEmail("admin@gmail.com");
         request.setPhone("0826662323");

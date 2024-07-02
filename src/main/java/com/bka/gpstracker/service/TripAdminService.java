@@ -67,8 +67,8 @@ public class TripAdminService {
         UserInfo userInfo = userInfoRepository.getByUsername(username);
         if (userInfo == null)
             throw new TrackerAppException(ErrorCode.USER_NOT_FOUND);
-        if (userInfo.getDriverStatus().equals(DriverStatus.INACTIVE))
-            throw new TrackerAppException(ErrorCode.DRIVER_INACTIVE);
+//        if (userInfo.getDriverStatus().equals(DriverStatus.INACTIVE))
+//            throw new TrackerAppException(ErrorCode.DRIVER_INACTIVE);
     }
 
     private boolean isDriver(String username) {

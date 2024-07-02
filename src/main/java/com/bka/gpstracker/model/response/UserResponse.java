@@ -22,6 +22,7 @@ public class UserResponse {
     private String fullName;
     private String avaUrl;
     private String email;
+    private String phone;
     private String createdBy;
     private Boolean isBusy;
     private String currentTripId;
@@ -33,7 +34,7 @@ public class UserResponse {
         BeanUtils.copyProperties(userInfo, result);
         if (authorities != null)
             result.setAuthorities(authorities.stream()
-                    .map(authority -> AuthorityResponse.from(authority))
+                    .map(AuthorityResponse::from)
                     .collect(Collectors.toList()));
         return result;
     }

@@ -46,7 +46,7 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
         String destination = sha.getDestination();
-        if (destination.startsWith("/driver")) {
+        if (destination != null && destination.startsWith("/driver")) {
             String username = driverService.removeActiveDriver(sha.getSessionId());
             applicationEventPublisher.publishEvent(new InactiveDriverEvent(username));
             logger.info("Driver disconnect socket with destination: {} and id: {}", destination, sha.getSessionId());

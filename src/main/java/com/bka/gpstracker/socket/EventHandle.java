@@ -21,7 +21,7 @@ public class EventHandle {
     public void handleNewPosition(NewPositionEvent newPositionEvent) {
         PositionLog positionLog = (PositionLog) newPositionEvent.getSource();
         socketSender.sendCommentToClient(positionLog);
-        log.info("Handle new position with rfid {} done!!", positionLog.getRfid());
+        log.info("Handle new position with rfid {} done!! - position: {}", positionLog.getRfid(), positionLog);
     }
 
     @EventListener

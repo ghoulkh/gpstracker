@@ -28,7 +28,7 @@ public class CheckInHandle {
     @Async
     public void handleNewCheckIn(NewCheckInEvent event) {
         CheckIn checkIn = (CheckIn) event.getSource();
-        CarInfo carInfo = carInfoRepository.getByRfid(checkIn.getRfid());
+        CarInfo carInfo = carInfoRepository.getByRfid(checkIn.getCarInfo().getRfid());
         if (carInfo == null) return;
         carInfo.setLastCheckInAt(checkIn.getDate());
         carInfoRepository.save(carInfo);

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-
 @Component
 @Log4j2
 public class CheckInJob {
@@ -25,11 +24,13 @@ public class CheckInJob {
         if (this.currentId == null)
             this.currentId = checkInRepository.getMaxId();
         Long maxId = checkInRepository.getMaxId();
+        if (maxId == null || this.currentId == null) {
+            return;
+        }
         if (maxId > this.currentId) {
             for (Long i = currentId + 1; i <= maxId; i ++) {
-                checkInRepository.findById(i).ifPresent(checkIn -> {
-                    applicationEventPublisher.publishEvent(new NewCheckInEvent(checkIn));
-                });
+                checkInRepository.findById(i).ifPresent(checkIn ->
+                        applicationEventPublisher.publishEvent(new NewCheckInEvent(checkIn)));
             }
             this.currentId = maxId;
         }

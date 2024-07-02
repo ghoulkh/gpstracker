@@ -9,21 +9,14 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "DinhVi")
 public class PositionLog {
     @Id
-    @Column(name = "STT")
     private Long id;
     @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
-    @Column(name = "Time")
     private Date date;
-    @Column(name = "rfid")
     private String rfid;
-    @Column(name = "Lat")
     private String lat;
-    @Column(name = "Long")
     private String lon;
-    @Column(name = "Speed")
     private String speed;
 
     public Position toPositionSolr() {

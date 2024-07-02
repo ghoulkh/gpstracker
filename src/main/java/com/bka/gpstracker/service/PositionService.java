@@ -39,7 +39,7 @@ public class PositionService {
     public void pushNewPositionToSolr(NewPositionEvent positionEvent) {
         PositionLog positionLog = (PositionLog) positionEvent.getSource();
         positionLogSolrRepository.save(positionLog.toPositionSolr());
-        log.info("push to solr new position with rfid {}", positionLog.getRfid());
+        log.info("push to solr new position with rfid {} - position: {}", positionLog.getRfid(), positionLog);
     }
 
     public List<PositionResponse> getByRange(String rfid, Long startTime, Long endTime) {
@@ -80,6 +80,7 @@ public class PositionService {
     }
 
     public PositionLog addPositionLog(PositionLogRequest request) {
-        return positionLogRepository.save(request.toPositionLog(positionLogRepository.getMaxId() + 1));
+        return positionLogRepository.save(request.toPositionLog((positionLogRepository.getMaxId() == null
+                ? 0 : positionLogRepository.getMaxId()) + 1));
     }
 }

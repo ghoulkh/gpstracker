@@ -9,11 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @Data
-@Table(name = "[User]")
 public class User {
     @Id
-    @Column(name = "UserName")
     private String username;
-    @Column(name = "PassWord")
     private String password;
 }

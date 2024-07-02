@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-@SolrDocument(solrCoreName = "code_forgot_pass")
+@SolrDocument(solrCoreName = "codeForgotPass")
 @Data
 public class CodeForgotPass {
     @Id

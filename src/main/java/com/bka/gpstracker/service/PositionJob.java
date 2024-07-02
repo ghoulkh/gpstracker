@@ -33,6 +33,9 @@ public class PositionJob {
     @Scheduled(initialDelay = 5, fixedDelay = 1, timeUnit = TimeUnit.SECONDS)
     public void checkNewPosition() {
         Long currentId = positionLogRepository.getMaxId();
+        if (currentId == null || lastId == null) {
+            return;
+        }
         if (lastId < currentId) {
             lastId ++;
             for (Long i = lastId; i <= currentId; i ++) {

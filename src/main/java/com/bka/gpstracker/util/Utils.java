@@ -1,15 +1,20 @@
 package com.bka.gpstracker.util;
 
 import com.bka.gpstracker.common.DriverStatus;
+import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.model.request.NewTripRequest;
 import com.bka.gpstracker.solr.entity.CurrentPosition;
 import com.bka.gpstracker.solr.entity.DeliveryInfo;
 import com.bka.gpstracker.solr.entity.Trip;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.text.Normalizer;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 public class Utils {
@@ -101,14 +106,20 @@ public class Utils {
     }
 
 
-    public static String getStatusFromLastCheckIn(Date lastCheckInAt) {
-        if (lastCheckInAt == null) {
+    public static String getStatusFromLastCheckIn(List<CheckIn> checkIns) {
+        if (CollectionUtils.isEmpty(checkIns)) {
             return DriverStatus.INACTIVE;
         }
-        Date sixHoursAgo = new Date(System.currentTimeMillis() - 3600 * 1000 * 4);
-        if (lastCheckInAt.before(sixHoursAgo)) {
+        Optional<CheckIn> checkIn = checkIns.stream().max(Comparator.comparing(CheckIn::getId));
+        if (!checkIn.isPresent()) {
             return DriverStatus.INACTIVE;
         }
-        return DriverStatus.ACTIVE;
+        if (checkIn.get().getCarInfo() == null) {
+            return DriverStatus.INACTIVE;
+        }
+        if (checkIn.get().isEnabled()) {
+            return DriverStatus.ACTIVE;
+        }
+        return DriverStatus.INACTIVE;
     }
 }

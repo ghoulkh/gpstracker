@@ -7,7 +7,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 import javax.persistence.Id;
 
 @Data
-@SolrDocument(solrCoreName = "position_log")
+@SolrDocument(solrCoreName = "position-log")
 public class Position {
     @Id
     @Indexed(name = "id", type = "string")

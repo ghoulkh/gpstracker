@@ -40,7 +40,7 @@ public class UserInfo {
     @Indexed(name = "status", type = "string")
     private String status;
     public Boolean getIsBusy() {
-        return this.isBusy == null ? false : isBusy;
+        return this.isBusy != null && isBusy;
     }
 
     public User toUser() {
@@ -48,10 +48,6 @@ public class UserInfo {
         result.setUsername(this.username);
         result.setPassword("fake-password");
         return result;
-    }
-
-    public String getDriverStatus() {
-        return Utils.getStatusFromLastCheckIn(this.lastCheckInAt);
     }
 
 }

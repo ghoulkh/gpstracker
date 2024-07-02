@@ -10,15 +10,10 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "enterprise")
 public class Enterprise {
     @Id
-    @Column(name = "enterprise_code")
     private String enterpriseCode;
-    @Column(name = "enterprise_name")
     private String enterpriseName;
-    @Column(name = "created_date")
     private Date createdDate;
-    @Column(name = "last_updated_date")
     private Date lastUpdatedDate;
 }

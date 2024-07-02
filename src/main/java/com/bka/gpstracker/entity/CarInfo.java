@@ -1,39 +1,39 @@
 package com.bka.gpstracker.entity;
 
-import com.bka.gpstracker.common.DriverStatus;
 import com.bka.gpstracker.util.JsonMapper;
 import com.bka.gpstracker.util.Utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "ThongTinXe")
 public class CarInfo {
     @Id
-    @Column(name = "RFID")
     private String rfid;
-    @Column(name = "BienSoXe")
     private String licensePlate;
-    @Column(name = "TaiXe")
     private String driver;
-    @Column(name = "GiayPhep")
     private String drivingLicense;
-    @Column(name = "userName")
     private String username;
     @JsonFormat(timezone = "Asia/Ho_Chi_Minh")
-    @Column(name = "last_check_in_at")
     private Date lastCheckInAt;
     @Lob
-    @Column(name = "active_areas")
     private String activeAreas;
+
+    @OneToMany(mappedBy = "carInfo", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<CheckIn> checkIns;
+
+    @OneToMany(mappedBy = "rfid", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<PositionLog> positionLogs;
+
 
     public List<String> getActiveAreas() {
         if (this.activeAreas == null)
@@ -48,7 +48,7 @@ public class CarInfo {
     }
 
     public String getStatus() {
-        return Utils.getStatusFromLastCheckIn(this.lastCheckInAt);
+        return Utils.getStatusFromLastCheckIn(checkIns);
     }
 
 }

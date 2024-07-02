@@ -27,7 +27,10 @@ import java.util.stream.Collectors;
 @Log4j2
 @Service
 public class UserService implements UserDetailsService {
-
+    @Autowired
+    private CarInfoRepository carInfoRepository;
+    @Autowired
+    private CheckInRepository checkInRepository;
     @Autowired
     private UserInfoRepository userInfoRepository;
     @Autowired
@@ -56,7 +59,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-
     public UserInfo getByUsername(String username) {
         return userInfoRepository.findById(username).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.USER_NOT_FOUND));
@@ -68,8 +70,17 @@ public class UserService implements UserDetailsService {
 
     public UserResponse getProfile() {
         String currentUser = SecurityUtil.getCurrentUsername();
+        if (currentUser == null) {
+            throw new TrackerAppException(ErrorCode.USER_NOT_FOUND);
+        }
         UserInfo userInfo = userInfoRepository.findById(currentUser).orElseThrow(() ->
                 new TrackerAppException(ErrorCode.USER_NOT_FOUND));
+        carInfoRepository.findByUsername(currentUser)
+                .flatMap(carInfo -> checkInRepository.findLatestCheckInByRfid(carInfo.getRfid()))
+                .ifPresent(checkIn -> {
+                    userInfo.setLastCheckInAt(checkIn.getDate());
+                    userInfo.setIsBusy(checkIn.isEnabled());
+                });
         return UserResponse.from(userInfo, authorityRepository.getAllByUsername(userInfo.getUsername()));
     }
 
@@ -91,8 +102,8 @@ public class UserService implements UserDetailsService {
     }
 
     private List<SimpleGrantedAuthority> getAuthorities(List<String> roles) {
-        List<SimpleGrantedAuthority> result =  new ArrayList<>();
-        for (int i = 0; i < roles.size(); i ++) {
+        List<SimpleGrantedAuthority> result = new ArrayList<>();
+        for (int i = 0; i < roles.size(); i++) {
             result.add(new SimpleGrantedAuthority(roles.get(i)));
         }
         return result;

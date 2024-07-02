@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface PositionLogRepository extends JpaRepository<PositionLog, Long> {
     List<PositionLog> findAllByRfid(String rfid, Pageable pageable);
-    @Query(value = "SELECT MAX(STT) From DinhVi", nativeQuery = true)
+    @Query(value = "SELECT MAX(id) From position_log", nativeQuery = true)
     Long getMaxId();
 }

@@ -1,13 +1,11 @@
 package com.bka.gpstracker.controller;
 
-import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.PositionLog;
 import com.bka.gpstracker.model.request.PositionLogRequest;
 import com.bka.gpstracker.model.response.PositionResponse;
 import com.bka.gpstracker.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +26,7 @@ public class PositionController {
         return ResponseEntity.ok(positionService.getByRfid(rfid, pageIndex, pageSize));
     }
 
-
     @PostMapping("/position")
-    @Secured(AuthoritiesConstants.ROLE_ADMIN)
     public ResponseEntity<PositionLog> addPosition(@RequestBody @Valid PositionLogRequest request) {
         return ResponseEntity.ok(positionService.addPositionLog(request));
     }

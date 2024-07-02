@@ -4,6 +4,8 @@ import com.bka.gpstracker.auth.AuthoritiesConstants;
 import com.bka.gpstracker.entity.CarInfo;
 import com.bka.gpstracker.model.request.AuthorCarInfoRequest;
 import com.bka.gpstracker.service.AdminUserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,6 +23,7 @@ public class AdminUserController {
     private AdminUserService adminUserService;
 
     @Secured(AuthoritiesConstants.ROLE_ADMIN)
+    @ApiOperation(value = "", authorizations = {@Authorization(value = "Authorization")})
     @PostMapping("/car-info/author")
     public ResponseEntity<CarInfo> setCarInfoAuthor(@RequestBody @Valid AuthorCarInfoRequest request) {
         return ResponseEntity.ok(adminUserService.setCarAuthor(request));

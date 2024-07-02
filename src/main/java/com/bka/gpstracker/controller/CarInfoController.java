@@ -33,9 +33,15 @@ public class CarInfoController {
         return ResponseEntity.ok(carInfoService.getByUsername(currentUsername));
     }
 
-    @PostMapping("/test/check_in/{rfid}")
-    public ResponseEntity<Response> testCheckIn(@PathVariable String rfid) {
-        carInfoService.testCheckIn(rfid);
+    @PostMapping("/test/check_in/{rfid}::ON")
+    public ResponseEntity<Response> testCheckInON(@PathVariable String rfid) {
+        carInfoService.testCheckIn(rfid, true);
+        return ResponseEntity.ok(new Response());
+    }
+
+    @PostMapping("/test/check_in/{rfid}::OFF")
+    public ResponseEntity<Response> testCheckInOFF(@PathVariable String rfid) {
+        carInfoService.testCheckIn(rfid, false);
         return ResponseEntity.ok(new Response());
     }
 

@@ -1,8 +1,8 @@
 package com.bka.gpstracker.handle;
 
-import com.bka.gpstracker.entity.CarInfo;
 import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.event.NewCheckInEvent;
+import com.bka.gpstracker.event.model.CheckInModelSocket;
 import com.bka.gpstracker.repository.CarInfoRepository;
 import com.bka.gpstracker.socket.SocketSender;
 import com.bka.gpstracker.solr.entity.UserInfo;
@@ -28,14 +28,25 @@ public class CheckInHandle {
     @Async
     public void handleNewCheckIn(NewCheckInEvent event) {
         CheckIn checkIn = (CheckIn) event.getSource();
-        CarInfo carInfo = carInfoRepository.getByRfid(checkIn.getCarInfo().getRfid());
-        if (carInfo == null) return;
+
+        var carInfo = checkIn.getCarInfo();
+        if (carInfo == null) {
+            return;
+        }
         carInfo.setLastCheckInAt(checkIn.getDate());
         carInfoRepository.save(carInfo);
+
         UserInfo userInfo = userInfoRepository.getByUsername(carInfo.getUsername());
         userInfo.setLastCheckInAt(checkIn.getDate());
         userInfoRepository.save(userInfo);
-        socketSender.sendCheckInToUser(checkIn);
+
+        var checkInSocket = new CheckInModelSocket();
+        checkInSocket.setId(checkIn.getId());
+        checkInSocket.setRfid(checkIn.getCarInfo().getRfid());
+        checkInSocket.setDate(checkIn.getDate());
+        checkInSocket.setEnabled(checkIn.isEnabled());
+        socketSender.sendCheckInToUser(checkInSocket);
+
         log.info("checkIn and send check in to user with car {}", carInfo);
     }
 }

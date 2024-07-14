@@ -1,7 +1,7 @@
 package com.bka.gpstracker.socket;
 
-import com.bka.gpstracker.entity.CheckIn;
 import com.bka.gpstracker.entity.PositionLog;
+import com.bka.gpstracker.event.model.CheckInModelSocket;
 import com.bka.gpstracker.socket.message.SocketCode;
 import com.bka.gpstracker.socket.message.SocketMessage;
 import com.bka.gpstracker.socket.message.SocketMessageContainer;
@@ -51,7 +51,7 @@ public class SocketSender {
         simpMessagingTemplate.convertAndSend(ADMIN_TOPIC, socketMessageContainer);
     }
 
-    public void sendCheckInToUser(CheckIn checkIn) {
+    public void sendCheckInToUser(CheckInModelSocket checkIn) {
         simpMessagingTemplate.convertAndSend(CHECK_IN_TOPIC, checkIn);
     }
 

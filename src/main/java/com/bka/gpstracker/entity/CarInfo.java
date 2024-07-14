@@ -5,7 +5,8 @@ import com.bka.gpstracker.util.Utils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.type.TypeReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class CarInfo {
     @Id
     private String rfid;
@@ -51,4 +53,14 @@ public class CarInfo {
         return Utils.getStatusFromLastCheckIn(checkIns);
     }
 
+    @Override
+    public String toString() {
+        return "CarInfo{" +
+                "rfid='" + rfid + '\'' +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", driver='" + driver + '\'' +
+                ", drivingLicense='" + drivingLicense + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

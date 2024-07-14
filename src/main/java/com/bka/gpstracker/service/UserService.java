@@ -48,7 +48,10 @@ public class UserService implements UserDetailsService {
         userInfoToSave.setPassword(passwordEncoder.encode(request.getPassword()));
 
         UserInfo result = userInfoRepository.save(userInfoToSave);
-        userRepository.save(userInfoToSave.toUser());
+
+        var user = userInfoToSave.toUser();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
 
         Authority authority = new Authority();
         authority.setUsername(userInfoToSave.getUsername());
